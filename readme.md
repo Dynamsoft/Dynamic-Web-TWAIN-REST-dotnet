@@ -42,7 +42,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    
    This requires you to install Dynamic Web TWAIN service beforehand (install the service by visiting [the online demo](https://demo.dynamsoft.com/web-twain/)).
    
-   You can also embed the service in your app by using the service package. Currently, only Windows is supported.
+   You can also embed the service in your app by using the service package (no installation of service is required using this way). Currently, only Windows is supported.
    
    ```csharp
    var serviceManager = new ServiceManager();
@@ -65,7 +65,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    options.Config = new ScannerConfiguration();
    options.Config.IfFeederEnabled = true;
    options.Config.IfDuplexEnabled = true;
-   var job = await DWTClient.ScannerControlClient.ScannerJobs.CreateJob(options);
+   var job = await client.ScannerControlClient.ScannerJobs.CreateJob(options);
    await job.StartJob();
    ```
    
@@ -79,6 +79,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
        if (result == null)
        {
            await job.DeleteJob();
+           break;
        }
        else
        {
