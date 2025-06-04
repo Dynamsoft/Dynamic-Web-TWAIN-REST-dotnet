@@ -47,7 +47,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    ```csharp
    var serviceManager = new ServiceManager();
    serviceManager.CreateService();
-   serviceManager.Service.BaseAddress; //get the address for the REST client to use
+   var address = serviceManager.Service.BaseAddress; //get the address for the REST client to use
    ```
 
 2. List connected scanners.
