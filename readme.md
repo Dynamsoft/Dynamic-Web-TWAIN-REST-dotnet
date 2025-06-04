@@ -21,7 +21,7 @@ The whole solution enables developers to create desktop or cross-platform applic
 
 You need to reference the projects and add them as dependencies.
 
-If you need to copy the service files and web resources in the service package to your project, you need to add the following to your project.
+If you need to copy the service files and web resources (for MAUI) in the service package to your project, you need to add the following to your project.
 
 ```xml
 <!--update the path based on your setup-->
