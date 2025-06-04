@@ -222,10 +222,10 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
 ## Samples
 
 * [WPFDemo](./Samples/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
-* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI which is mainly designed for the mobile platform. 
-* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample which scans document images into a viewer
-* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample which scans document images into a viewer
-* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample which scans document images into a viewer
+* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI that is mainly designed for the mobile platform. 
+* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample that scans document images into a viewer
+* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample that scans document images into a viewer
+* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample that scans document images into a viewer
 
 The samples all use the Document Viewer in a WebView.
 
