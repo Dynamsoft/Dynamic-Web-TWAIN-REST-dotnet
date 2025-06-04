@@ -21,7 +21,7 @@ The whole solution enables developers to create desktop or cross-platform applic
 
 You need to reference the projects and add them as dependencies.
 
-If you need to copy the web resources in the service package to your .NET MAUI project as well. You need to add the following to your project.
+If you need to copy the service files and web resources in the service package to your project, you need to add the following to your project.
 
 ```xml
 <!--update the path based on your setup-->
@@ -182,7 +182,7 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
 
    For WebView2, if you are using the service package, the web page already exists in the service's [folder](./DynamicWebTWAIN.Service/PackService/content/common/dynamsoft.dwt.service/app/site/default/) and we can load it via URL. If you installed the service via the installers, you need to copy the web page to the service's `app/site/default/` folder.
    
-   For HybridWebView, you need to copy the web page to the `Resources/raw/ddv` folder. You can also add the following to your project to use the files packed in the service package.
+   For HybridWebView, you need to copy the web page to the `Resources/raw/ddv` folder. If you've added the following to your project, it will copy the web page packed in the service package to your app's root.
 
    ```xml
    <!--update the path based on your setup-->
