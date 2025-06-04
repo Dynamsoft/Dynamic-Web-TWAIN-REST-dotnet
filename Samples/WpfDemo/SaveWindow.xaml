@@ -1,0 +1,32 @@
+﻿<Window x:Class="WpfDemo.SaveWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="SaveWindow" Height="469" Width="333" ResizeMode="CanMinimize">
+    <Grid Margin="10">
+        <!-- File Name -->
+        <Label Content="File Name:" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <TextBox Name="txtFileName" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,0,0,0" />
+
+        <!-- File Type Selection -->
+        <Label Content="Save Type:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40,0,0" />
+        <ComboBox Name="cbFileType" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,40,0,0" SelectionChanged="cbFileType_SelectionChanged">
+            <ComboBoxItem Content="JPEG" />
+            <ComboBoxItem Content="PNG" />
+            <ComboBoxItem Content="TIFF" />
+            <ComboBoxItem Content="PDF" />
+        </ComboBox>
+
+        <!-- Options Group -->
+        <GroupBox Header="Options" VerticalAlignment="Top" Margin="0,80,0,0" Height="260">
+            <StackPanel Name="optionsPanel" Margin="10,0,10,0" Height="220">
+                <!-- Dynamic options will be added here -->
+            </StackPanel>
+        </GroupBox>
+        <Label Width="115" Height="36" Margin="90,360,90,0" Name="lbSave" VerticalAlignment="Top" MouseDown="lbSave_MouseDown" MouseEnter="lbSave_MouseEnter" MouseLeave="lbSave_MouseLeave">
+            <!--<Label.Background>
+                <ImageBrush ImageSource="/WpfDemo;component/Images/normal/save_now.png"/>
+            </Label.Background>-->
+        </Label>
+
+    </Grid>
+</Window>

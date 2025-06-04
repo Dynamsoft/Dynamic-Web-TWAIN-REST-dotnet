@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DWT_REST_MAUI.SettingsPage"
+             xmlns:viewModels="clr-namespace:DWT_REST_MAUI.ViewModels"
+             x:DataType="viewModels:SettingsViewModel"
+             Title="Settings">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                 Order="Primary"
+                 Command="{Binding SaveSettingsCommand}"
+                 />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="30">
+
+            <!-- License Input -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="License Key:" FontAttributes="Bold"/>
+                <Entry Placeholder="Enter your license key" 
+                       Text="{Binding LicenseKey}"/>
+            </VerticalStackLayout>
+
+            <!-- IP Address Input -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="IP Address:" FontAttributes="Bold"/>
+                <Entry Placeholder="Enter Web TWAIN service address" 
+                       Keyboard="Plain"
+                       Text="{Binding IpAddress}"/>
+                <Button Text="{Binding FindServiceButtonText}" Command="{Binding FindServiceCommand}"></Button>
+            </VerticalStackLayout>
+
+            <!-- Scanner Dropdown -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Scanner Model:" FontAttributes="Bold"/>
+                <Picker 
+                        ItemsSource="{Binding ScannerModels}"
+                        SelectedItem="{Binding SelectedScannerModel}">
+                    <Picker.Items>
+                    </Picker.Items>
+                </Picker>
+                <Button Text="Reload" Command="{Binding LoadScannersCommand}"></Button>
+            </VerticalStackLayout>
+
+            <!-- DPI Radio Buttons -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="DPI:" FontAttributes="Bold"/>
+                <RadioButton GroupName="DpiGroup" 
+                             Content="150 DPI" 
+                             IsChecked="{Binding Is150Dpi}"/>
+                <RadioButton GroupName="DpiGroup" 
+                             Content="300 DPI" 
+                             IsChecked="{Binding Is300Dpi}"/>
+                <RadioButton GroupName="DpiGroup" 
+                             Content="600 DPI" 
+                             IsChecked="{Binding Is600Dpi}"/>
+            </VerticalStackLayout>
+
+            <!-- Color Mode Radio Buttons -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Color Mode:" FontAttributes="Bold"/>
+                <RadioButton GroupName="ColorModeGroup" 
+                             Content="Black &amp; White" 
+                             IsChecked="{Binding IsBlackWhite}"/>
+                <RadioButton GroupName="ColorModeGroup" 
+                             Content="Grayscale" 
+                             IsChecked="{Binding IsGrayscale}"/>
+                <RadioButton GroupName="ColorModeGroup" 
+                             Content="Color" 
+                             IsChecked="{Binding IsColor}"/>
+            </VerticalStackLayout>
+
+            <Label Text="Auto Feeder" FontAttributes="Bold"></Label>
+            <CheckBox IsChecked="{Binding AutoFeeder}" HorizontalOptions="Start"></CheckBox>
+
+            <Label Text="Duplex" FontAttributes="Bold"></Label>
+            <CheckBox IsChecked="{Binding Duplex}" HorizontalOptions="Start"></CheckBox>
+            
+            <!-- Save Button -->
+            <Button Text="Save Settings" 
+                    HorizontalOptions="Center"
+                    Command="{Binding SaveSettingsCommand}"
+                    WidthRequest="200"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

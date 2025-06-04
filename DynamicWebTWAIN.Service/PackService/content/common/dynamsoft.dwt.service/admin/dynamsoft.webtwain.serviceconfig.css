@@ -1,0 +1,56 @@
+/*!
+* Dynamsoft WebTWAIN Admin Console
+* Product: Dynamsoft Web Twain
+* Web Site: http://www.dynamsoft.com
+*
+* Copyright 2023, Dynamsoft Corporation 
+* Author: Dynamsoft Support Team
+*/
+.left { float:left; min-width:750px; width: 49%; background-color:#F5F5F5 }
+.right { float:left; min-width:550px; width: 50%; margin: 0 auto; background-color:#FFF; }
+.breakWord {word-break: break-all;}
+
+@media (max-width: 750px){
+.ds-left img,.ds-right img,.ds-right2 img,.ds-line img {position:absolute;top:-1000px;left:-1000px}
+}
+@media (min-width: 750px){
+.main {height:100%;display:flex;display:-ms-flexbox;-ms-flex-direction:row;flex-direction:row;overflow:hidden;ms-flex-positive: 0;flex-grow: 0;}
+.ds-left img {position:absolute;top:40px;left:0;}
+.ds-right img {position:absolute;top:0;right:0;}
+.ds-right2 img {position:absolute;top:203px;right:47px;}
+.ds-line img {position:absolute;bottom:0;left:0;}
+}
+.main { min-height: 950px }
+
+button::-moz-focus-inner,input[type="button"]::-moz-focus-inner{outline: none;}
+
+.ds-content {font-family:OpenSans; margin:38px auto;}
+
+.ds-info { width: 90%; padding:25px 0 0 30px; font-family:OpenSans; }
+.ds-info h1, .ds-config h1 {  padding:0; margin:0; font-family:OswaldLight; font-size: 38px; line-height: 50px; font-weight: normal; }
+.ds-info .ds-title { font-family:Oswald; margin: 36px 0 15px 0; font-size: 24px; line-height: 36px; }
+.ds-info li { font-size: 18px; line-height: 42px; }
+.ds-info .item1 { padding: 20px 0 20px 20px; height:20px; background-color:#EEE; }
+.ds-info .item2 { padding: 31px 0 0 20px; background-color:#EEE; }
+
+.ds-config {margin: 0 auto; padding:25px 0 0 60px; position:relative;}
+.ds-config input[type="checkBox"] {width:26px;height:26px;}
+.ds-config input {font-family:OpenSansBold;font-size: 16px; width:352px;height:40px;border:2px solid #606060;}
+.ds-config input[type="file"] {border:0}
+.ds-config input[type="button"] {width:358px;height:40px;color:#FFF;background-color:#FE8E14;border:0;border-radius:5px}
+.ds-config input[type="button"]:hover {border:1px solid #323234; cursor: pointer;}
+.ds-config input[type="button"]:focus {outline: none;}
+
+.ds-config select {font-family:OpenSansBold;font-size:16px;width:360px;height:46px;border:2px solid #606060;}
+.ds-div-input-host { left: 0; top:0 }
+.ds-div-input-host input {font-family:OpenSansBold;font-size:16px;width:330px;height:40px;border:2px solid #606060;}
+
+
+.ds-name {margin:15px 0 10px 0; font-size:20px; line-height:28px}
+.ds-checkboxLine {margin:15px 0 10px 0; font-size:20px; line-height:28px}
+.ds-checkboxLine span {float:left; margin-top: -3px; }
+.ds-reboot {color:#606060; margin-left:80px}
+.ds-update {margin:30px 0 40px 0;}
+
+#reboot {font-family:OpenSansBold;font-size: 16px; cursor:pointer;color:#50A8E1;border:0;background-color:#FFF}
+.ds-bonjour { display: inline-block; width: 70px }

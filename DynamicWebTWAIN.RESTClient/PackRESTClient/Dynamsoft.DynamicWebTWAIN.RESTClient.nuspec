@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dynamsoft.DynamicWebTWAIN.RestClient</id>
+    <version>19.1.0</version>
+    <title>Dynamsoft Dynamic WebTWAIN RestClient SDK</title>
+    <authors>Dynamsoft</authors>
+
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <icon>images/DynamicWebTWAIN.png</icon>
+    <readme>docs/README.md</readme>
+    <copyright>© 2003-2025 Dynamsoft Corporation. All rights reserved.</copyright>
+
+    <projectUrl>https://www.dynamsoft.com/web-twain/overview/</projectUrl>
+    <description>This package is a .NET wrapper of Dynamic Web TWAIN's REST API. It enables developers to create desktop or cross-platform applications to scan and digitize documents using protocals like TWAIN, WIA, SANE, ICA and eSCL.</description>
+    <tags>scanner, scanning, TWAIN, WIA</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0"></group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="dwt.png" target="images/DynamicWebTWAIN.png" />
+    <file src="README.md" target="docs" />
+    <file src="LEGAL.txt" target="" />
+    <file src="LICENSE.txt" target="" />
+    <file src="..\bin\Release\**\*.dll" target="lib" />
+  </files>
+</package>

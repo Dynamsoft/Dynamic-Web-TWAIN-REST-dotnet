@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <version>19.1.0</version>
+    <Title>Dynamsoft Dynamic Web TWAIN Service Finder</Title>
+    <Company>Dynamsoft</Company>
+    <Description>To find Dynamsoft Web TWAIN service for scanning from any device.</Description>
+    <Copyright>© 2003-2025 Dynamsoft Corporation. All rights reserved.</Copyright>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Zeroconf" Version="3.7.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="PackServiceFinder\**" />
+    <EmbeddedResource Remove="PackServiceFinder\**" />
+    <None Remove="PackServiceFinder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LEGAL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

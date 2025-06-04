@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="PrepareDWTServicex64" Condition="'$(PlatformTarget)' == 'x64' AND $(RuntimeIdentifier) != ''" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <winDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/win-x64/**" />
+      <macDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/maccatalyst-x64/**" />
+      <commonDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/common/**" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(winDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/win-x64/native/%(RecursiveDir)" Condition="$(TargetFramework.ToLower().Contains('window'))" />
+    <Copy SourceFiles="@(commonDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/win-x64/native/%(RecursiveDir)" Condition="$(TargetFramework.ToLower().Contains('window'))" />
+
+    <Copy SourceFiles="@(macDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/maccatalyst-x64/native/%(RecursiveDir)" Condition="$(TargetFramework.ToLower().Contains('maccatalyst'))" />
+    <Copy SourceFiles="@(commonDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/maccatalyst-x64/native/%(RecursiveDir)" Condition="$(TargetFramework.ToLower().Contains('maccatalyst'))" />
+
+  </Target>
+  
+  <Target Name="PrepareDWTServiceAnyCPU" Condition="($(TargetFrameworks.ToLower().Contains('window'))==false) AND ($(TargetFrameworks.ToLower().Contains('maccatalyst'))==false) AND ('$(PlatformTarget)' == '' OR ('$(PlatformTarget)' == 'x64' AND $(RuntimeIdentifier) == ''))" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <winDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/win-x64/**" />
+      <macDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/maccatalyst-x64/**" />
+      <commonDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/common/**" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(winDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/win-x64/native/%(RecursiveDir)" />
+    <Copy SourceFiles="@(commonDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/win-x64/native/%(RecursiveDir)" />
+
+    <Copy SourceFiles="@(macDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/maccatalyst-x64/native/%(RecursiveDir)" />
+    <Copy SourceFiles="@(commonDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/runtimes/maccatalyst-x64/native/%(RecursiveDir)" />
+
+  </Target>
+
+  <Target Name="CopyMauiResources" Condition="'$(UseMaui)'=='true'" BeforeTargets="PrepareForBuild">
+
+    <ItemGroup>
+      <commonWebRootDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/common/dynamsoft.dwt.service/app/site/default/**" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(commonWebRootDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/ddv/%(RecursiveDir)" />
+
+  </Target>
+
+</Project>

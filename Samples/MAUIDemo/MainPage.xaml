@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DWT_REST_MAUI.MainPage"
+             Title="Document Scanner">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Action"
+                     Order="Primary"
+                     Clicked="OnActionItemClicked"
+                     />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="Auto,*"
+      ColumnDefinitions="*">
+        <HybridWebView x:Name="webView"
+                   Grid.Row="1" DefaultFile="index.html" />
+    </Grid>
+</ContentPage>

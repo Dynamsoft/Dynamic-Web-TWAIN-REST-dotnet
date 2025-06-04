@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dynamsoft.DynamicWebTWAIN.Service</id>
+    <version>19.1.0-10</version>
+    <title>Dynamsoft Dynamic WebTWAIN Service SDK</title>
+    <authors>Dynamsoft</authors>
+
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <icon>images/DynamicWebTWAIN.png</icon>
+    <readme>README.md</readme>
+    <copyright>© 2003-2025 Dynamsoft Corporation. All rights reserved.</copyright>
+
+    <projectUrl>https://www.dynamsoft.com/web-twain/overview/</projectUrl>
+    <description>The package embeds Dynamic Web TWAIN service in your app to add document scanning function to the app via the service's REST API.</description>
+    <tags>scanner, scanning, TWAIN, WIA</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0"></group>
+    </dependencies>
+
+  </metadata>
+  <files>
+    <file src="dwt.png" target="images/DynamicWebTWAIN.png" />
+    <file src="README.md" target="" />
+    <file src="LEGAL.txt" target="" />
+    <file src="LEGAL.txt" target="content\common\dynamsoft.dwt.service" />
+    <file src="LICENSE.txt" target="" />
+    <file src="LICENSE.txt" target="content\common\dynamsoft.dwt.service" />
+    <file src="content/**" target=""  />
+    <file src="Dynamsoft.DynamicWebTWAIN.Service.targets" target="build" />
+    <file src="..\bin\Release\**\DynamicWebTWAIN.Service.dll" target="lib" />
+  </files>
+</package>

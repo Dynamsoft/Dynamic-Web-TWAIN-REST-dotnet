@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <version>19.1.0</version>
+    <Copyright>© 2003-2025 Dynamsoft Corporation. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="PackRESTClient\**" />
+    <EmbeddedResource Remove="PackRESTClient\**" />
+    <None Remove="PackRESTClient\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LEGAL.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+</Project>

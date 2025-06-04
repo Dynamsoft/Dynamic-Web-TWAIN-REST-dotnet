@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dynamsoft.DocumentViewer.JSInterop</id>
+    <version>19.1.0</version>
+    <title>Dynamsoft DocumentViewer JavaScript Interop</title>
+    <authors>Dynamsoft</authors>
+
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <icon>images/ddv.png</icon>
+    <readme>docs/README.md</readme>
+    <copyright>© 2003-2025 Dynamsoft Corporation. All rights reserved.</copyright>
+
+    <projectUrl>https://www.dynamsoft.com/document-viewer/docs/introduction/index.html</projectUrl>
+    <description>The Dynamsoft DocumentViewer JavaScript Interop helps you integrate a dedicated document viewer into your app using WebView. It provides rich, efficient and quick-to-implement APIs to scan documents via protocals like TWAIN, WIA, SANE, ICA and eSCL based on Dynamic Web TWAIN's RESI API.</description>
+    <tags>scanner, scanning, TWAIN, WIA, document, WebViewer</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Dynamsoft.DynamicWebTWAIN.RestClient" version="19.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+
+  </metadata>
+  <files>
+    <file src="ddv.png" target="images" />
+    <file src="README.md" target="docs" />
+    <file src="LEGAL.txt" target="" />
+    <file src="LICENSE.txt" target="" />
+    <file src="..\bin\Release\**\DocumentViewer.JSInterop.dll" target="lib" />
+  </files>
+</package>

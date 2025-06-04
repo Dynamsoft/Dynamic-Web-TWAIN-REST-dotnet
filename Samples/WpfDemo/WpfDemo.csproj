@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
+  </ItemGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\..\DocumentViewer.JSInterop\DocumentViewer.JSInterop.csproj" />
+    <ProjectReference Include="..\..\DynamicWebTWAIN.RESTClient\DynamicWebTWAIN.RESTClient.csproj" />
+    <ProjectReference Include="..\..\DynamicWebTWAIN.Service\DynamicWebTWAIN.Service.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
+</Project>

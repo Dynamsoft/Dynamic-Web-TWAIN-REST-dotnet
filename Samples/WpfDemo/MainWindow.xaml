@@ -1,0 +1,139 @@
+﻿<Window x:Class="WpfDemo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:local="clr-namespace:WpfDemo" xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    Title="WpfDemo" Height="698" Width="898" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True" BorderBrush="#FFAEAEAE" BorderThickness="1" ResizeMode="CanMinimize"
+    Loaded="Window_Loaded"
+    Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="MouseEnter" Handler="Button_MouseEnter"/>
+            <EventSetter Event="MouseLeave" Handler="Button_MouseLeave"/>
+            <EventSetter Event="Loaded" Handler="Button_Loaded"/>
+            <EventSetter Event="PreviewMouseDown" Handler="Button_PreviewMouseDown"/>
+            <EventSetter Event="PreviewMouseUp" Handler="Button_PreviewMouseUp"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0" Height="40" Grid.Column="0" Grid.ColumnSpan="2" LastChildFill="False" FlowDirection="RightToLeft" Name="dpTitle">
+            <Button Height="40" Width="46" Tag="close" Margin="10,0,2,0" Click="CloseWindow"/>
+            <Button Height="40" Width="46" Tag="min" Margin="2,0" Click="MinWindow"/>
+        </DockPanel>
+
+        <!--<Border BorderThickness="0,1" BorderBrush="#FFAEAEAE" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <DockPanel LastChildFill="False">
+                <DockPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="White"/>
+                        <GradientStop Offset="1" Color="#FFEDEDED"/>
+                    </LinearGradientBrush>
+                </DockPanel.Background>
+                <Button Width="122" Height="34" Tag="scan" Margin="15,0,10,0" Click="Scan_Click"/>
+                <Button Width="122" Height="34" Tag="load" Margin="10,0" Click="Load_Click"/>
+                <Border BorderBrush="Red" BorderThickness="1">
+                    <Button Width="122" Height="34" Tag="Save" Margin="260,0" Click="Save_Click"/>
+                </Border>
+            </DockPanel>
+        </Border>-->
+        <Border BorderThickness="0,1" BorderBrush="#FFAEAEAE" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0" Color="White"/>
+                        <GradientStop Offset="1" Color="#FFEDEDED"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Width="115" Height="36" Tag="scan" Margin="15,0,10,0" Click="Scan_Click"/>
+                <Button Grid.Column="1" Width="115" Height="36" Tag="load" Margin="10,0" Click="Load_Click"/>
+                <Button Grid.Column="3" Width="115" Height="36" Tag="Save" Margin="10,0,25,0" Click="Save_Click"/>
+            </Grid>
+        </Border>
+
+        <Canvas Grid.Column="0" Grid.Row="2">
+            <Rectangle Height="90" Stroke="#CCC" Canvas.Top="0" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Rectangle Height="90" Stroke="#CCC" Canvas.Top="90" Width="200"/>
+            <Rectangle Height="130" Stroke="#CCC" Canvas.Top="180" Width="200"/>
+            <Rectangle Height="90" Stroke="#CCC" Canvas.Top="310" Width="200"/>
+            <Rectangle Height="90" Stroke="#CCC" Canvas.Top="400" Width="200"/>
+            <Rectangle Height="90" Stroke="#CCC" Canvas.Top="490" Width="200"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="10" Text="General" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="10" Canvas.Top="40" Width="44" Height="44" Tag="hand" ToolTip="Move" Click="Hand_Click" Name="btnHand" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="54" Canvas.Top="40" Width="44" Height="44" Tag="select" ToolTip="Crop" Click="Arrow_Click" Name="btnArrow" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="100" Text="Edit" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!--<RadioButton Canvas.Left="15" Canvas.Top="86" Width="120" Height="36" Tag="current" Content="Current Page" ToolTip="Current Page" Name="rbCurrent" GroupName="PageRange" IsChecked="True"/>
+            <RadioButton Canvas.Left="15" Canvas.Top="106" Width="120" Height="36" Tag="selected" Content="Selected Pages" ToolTip="Selected Pages" Name="rbSelected" GroupName="PageRange"/>-->
+            <Button Canvas.Left="10" Canvas.Top="130" Width="44" Height="44" Tag="rotate-right" ToolTip="Rotate Right" Click="RotateRight_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="54" Canvas.Top="130" Width="44" Height="44" Tag="rotate-left" ToolTip="Rotate Left" Click="RotateLeft_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="98" Canvas.Top="130" Width="44" Height="44" Tag="crop" ToolTip="Crop" Click="Crop_Click" Name="btnCrop" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="190" Text="Annotations"/>
+            <Button Canvas.Left="10" Canvas.Top="220" Width="44" Height="44" Tag="line" ToolTip="Line" Click="Line_Click" Name="btnLine"/>
+            <Button Canvas.Left="54" Canvas.Top="220" Width="44" Height="44" Tag="polyline" ToolTip="Polyline" Click="Polyline_Click" Name="btnPolyline"/>
+            <Button Canvas.Left="98" Canvas.Top="220" Width="44" Height="44" Tag="rectangle" ToolTip="Rectangle" Click="Rectangle_Click" Name="btnRectangle" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Canvas.Left="142" Canvas.Top="220" Width="44" Height="44" Tag="eclipse" ToolTip="Eclipse" Click="Eclipse_Click" Name="btnEclipse" RenderTransformOrigin="2.291,-0.306" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Canvas.Left="10" Canvas.Top="260" Width="44" Height="44" Tag="Text" ToolTip="Text" Click="Text_Click" Name="btnText"/>
+            <Button Canvas.Left="54" Canvas.Top="260" Width="44" Height="44" Tag="TextBox" ToolTip="TextBox" Click="TextBox_Click" Name="btnTextBox"/>
+            <Button Canvas.Left="98" Canvas.Top="260" Width="44" Height="44" Tag="Ink" ToolTip="Ink" Click="Ink_Click" Name="btnInk"/>
+            <Button Canvas.Left="142" Canvas.Top="260" Width="44" Height="44" Tag="Stamp" ToolTip="Stamp" Click="Stamp_Click" Name="btnStamp"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="320" Text="Undo/Redo"/>
+            <Button Canvas.Left="10" Canvas.Top="350" Width="44" Height="44" Tag="Undo" ToolTip="Undo" Click="Undo_Click" Name="btnUndo"/>
+            <Button Canvas.Left="54" Canvas.Top="350" Width="44" Height="44" Tag="Redo" ToolTip="Redo" Click="Redo_Click" Name="btnRedo"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="410" Text="Fit &amp; Scale" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="10" Canvas.Top="440" Width="44" Height="44" Tag="fit" ToolTip="Fit Window Size" Click="FitWindow_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="54" Canvas.Top="440" Width="44" Height="44" Tag="original-size" ToolTip="Original Size" Click="OriginalSize_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="15" Canvas.Top="500" Text="Delete &amp; Delete All" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!--<Button Canvas.Left="15" Canvas.Top="476" Width="60" Height="36" Tag="delete" ToolTip="Delete Current Image" Click="Delete_Click"/>
+            <Button Canvas.Left="75" Canvas.Top="476" Width="60" Height="36" Tag="delete" Content="Delete Selected" ToolTip="Delete Selected Image(s)" Click="DeleteSelected_Click"/>
+            <Button Canvas.Left="15" Canvas.Top="516" Width="60" Height="36" Tag="delete-all" ToolTip="Delete All" Click="DeleteAll_Click"/> -->
+            <Button Canvas.Left="10" Canvas.Top="530" Width="44" Height="44" Tag="delete" ToolTip="Delete Selected Image(s)" Click="DeleteSelected_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Canvas.Left="54" Canvas.Top="530" Width="44" Height="44" Tag="delete-all" ToolTip="Delete All" Click="DeleteAll_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        </Canvas>
+
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#FFAEAEAE">
+                <wv2:WebView2 x:Name="webView" Margin="0,0,0,-25" />
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0,0,0,0" BorderBrush="#FFAEAEAE">
+            <TextBlock HorizontalAlignment="Stretch" Background="#FFE6E5EA" Text="SDKs used in this demo: Dynamic Web TWAIN and Dynamsoft Document Viewer.                               @2025 Dynamsoft Corporation. All rights reserved.   " TextAlignment="Right"/>
+        </Border>
+
+    </Grid>
+</Window>
