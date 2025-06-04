@@ -47,7 +47,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    ```csharp
    var serviceManager = new ServiceManager();
    serviceManager.CreateService();
-   serviceManager.Service.BaseAddress; #get the address for the REST client to use
+   serviceManager.Service.BaseAddress; //get the address for the REST client to use
    ```
 
 2. List connected scanners.
@@ -220,11 +220,11 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
 
 ## Samples
 
-* [WPF Demo](./Samples/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
-* [MAUI Demo](./Samples/MAUIDemo/): a full-featured demo in MAUI which is mainly designed for the mobile platform. 
-* [MAUI Simple](./Samples/MauiHybridApp/): a basic MAUI sample which scans document images into a viewer
-* [WPF Simple](./Samples/WpfWebviewApp/): a basic WPF sample which scans document images into a viewer
-* [WinForms](./Samples/WinFormsApp/): a basic WinForms sample which scans document images into a viewer
+* [WPFDemo](./Samples/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
+* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI which is mainly designed for the mobile platform. 
+* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample which scans document images into a viewer
+* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample which scans document images into a viewer
+* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample which scans document images into a viewer
 
 The samples all use the Document Viewer in a WebView.
 
