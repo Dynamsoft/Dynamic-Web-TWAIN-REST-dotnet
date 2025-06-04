@@ -239,7 +239,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
 
     public void LoadPreferences() {
         LicenseKey = Preferences.Get("License", "");
-        IpAddress = Preferences.Get("IP", "http://127.0.0.1:18623");
+        IpAddress = Preferences.Get("IP", "https://127.0.0.1:18623");
         Duplex = Preferences.Get("Duplex", false);
         AutoFeeder = Preferences.Get("AutoFeeder", false);
         int DPI = Preferences.Get("DPI",150);

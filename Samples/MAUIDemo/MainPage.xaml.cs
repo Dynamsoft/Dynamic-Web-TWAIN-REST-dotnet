@@ -55,9 +55,7 @@ namespace DWT_REST_MAUI
         private Dynamsoft.DocumentViewer.JSInterop _jsInterop;
         private IScannerJobClient? scannerJob;
         private Boolean isDesktop;
-        private string productKey = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAwMjI3NzYzLVRYbFFjbTlxIiwibWFpblNlcnZlclVSTCI6Imh0dHBzOi8vbWx0cy5keW5hbXNvZnQuY29tIiwib3JnYW5pemF0aW9uSUQiOiIxMDAyMjc3NjMiLCJzdGFuZGJ5U2VydmVyVVJMIjoiaHR0cHM6Ly9zbHRzLmR5bmFtc29mdC5jb20iLCJjaGVja0NvZGUiOjE4OTc4MDUzNDV9";
-
-        private string readBarcodeProductKey = "t0073hgAAAGWZfDlYbWB4VK0AMtpnX+caSb9KgGJnrDWAxP/CRBcOTyRQnBgDrqHLJtrmDUmBRlp5eQSiFFlTH1NDSh/+2kgHA0UbaA==";
+        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
 
         public MainPage()
         {
@@ -66,7 +64,6 @@ namespace DWT_REST_MAUI
 #else
             isDesktop = false;
 #endif
-            isDesktop = false;
             InitializeComponent();
             webView.SetInvokeJavaScriptTarget(this);
             InitViewer();
