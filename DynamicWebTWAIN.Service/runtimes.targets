@@ -37,7 +37,7 @@
       <commonWebRootDirectoryForDWT Include="$(MSBuildThisFileDirectory)/PackService/content/common/dynamsoft.dwt.service/app/site/default/**" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(commonWebRootDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(OutputPath)/ddv/%(RecursiveDir)" />
+    <Copy SourceFiles="@(commonWebRootDirectoryForDWT)" SkipUnchangedFiles="true" DestinationFolder="$(ProjectDir)/Resources/Raw/ddv/%(RecursiveDir)" />
 
   </Target>
 
