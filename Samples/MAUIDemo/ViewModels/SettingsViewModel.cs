@@ -324,6 +324,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
                             $"Scanner: {SelectedScannerModel}\n" +
                             $"DPI: {SelectedDpi}\n" +
                             $"Color Mode: {SelectedColorMode}");
+        var previousLicense = Preferences.Get("License", "");
         Preferences.Set("License", LicenseKey);
         Preferences.Set("IP", IpAddress);
         Preferences.Set("Scanner", SelectedScannerModel);
@@ -331,7 +332,14 @@ internal class SettingsViewModel : INotifyPropertyChanged
         Preferences.Set("AutoFeeder", AutoFeeder);
         Preferences.Set("Duplex", Duplex);
         Preferences.Set("ColorMode", SelectedColorMode);
-        Shell.Current.GoToAsync("../");
+        if (!previousLicense.Equals(LicenseKey))
+        {
+            Shell.Current.GoToAsync("../?licenseChanged=true");
+        }
+        else {
+            Shell.Current.GoToAsync("../");
+        }
+            
     }
 
     // INotifyPropertyChanged implementation

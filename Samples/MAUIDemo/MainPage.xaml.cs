@@ -2,7 +2,6 @@
 using Dynamsoft.DocumentViewer;
 using System.Diagnostics;
 using DynamicWebTWAIN.Service;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace DWT_REST_MAUI
 {
@@ -47,7 +46,7 @@ namespace DWT_REST_MAUI
         }
 
     }
-
+    [QueryProperty(nameof(LicenseChanged), "licenseChanged")]
     public partial class MainPage : ContentPage
     {
         private ServiceManager _serviceManager;
@@ -56,6 +55,20 @@ namespace DWT_REST_MAUI
         private IScannerJobClient? scannerJob;
         private Boolean isDesktop;
         private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
+        string licenseChanged;
+
+        public string LicenseChanged
+        {
+            get => licenseChanged;
+            set
+            {
+                licenseChanged = value;
+                if (licenseChanged == "true")
+                {
+                    AskWhetherToReload();
+                }
+            }
+        }
 
         public MainPage()
         {
@@ -72,6 +85,22 @@ namespace DWT_REST_MAUI
 
         private async void RequestCameraPermission() {
             PermissionStatus status = await Permissions.RequestAsync<Permissions.Camera>();
+        }
+
+        private async void AskWhetherToReload() {
+            bool answer = await DisplayAlert("Question?", "License is changed. Do you want to reload the page to make it effective?", "Yes", "No");
+            if (answer) {
+                Debug.WriteLine("reset viewer");
+                ResetViewer();
+            }
+            var currentPage = Shell.Current.CurrentState.Location.OriginalString;
+            Debug.WriteLine($"{currentPage}");
+            await Shell.Current.GoToAsync($"//{currentPage}"); //clear params
+        }
+
+        private async void ResetViewer() { 
+            await webView.EvaluateJavaScriptAsync("location.reload();");
+            InitViewer();
         }
 
         private async void InitViewer()
