@@ -232,8 +232,11 @@ internal class SettingsViewModel : INotifyPropertyChanged
         }
         string result = await _dialogService.ShowActionSheetAsync("Select an address", "Cancel", null, addresses.ToArray());
         Debug.WriteLine(result);
-        if (result.StartsWith("https")) {
-            IpAddress = result;
+        if (!string.IsNullOrEmpty(result)) {
+            if (result.StartsWith("https"))
+            {
+                IpAddress = result;
+            }
         }
     }
 

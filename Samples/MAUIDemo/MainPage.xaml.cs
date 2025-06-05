@@ -64,7 +64,6 @@ namespace DWT_REST_MAUI
 #else
             isDesktop = false;
 #endif
-            isDesktop = false;
             InitializeComponent();
             webView.SetInvokeJavaScriptTarget(this);
             InitViewer();
