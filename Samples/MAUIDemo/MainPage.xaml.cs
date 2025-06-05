@@ -312,15 +312,17 @@ namespace DWT_REST_MAUI
                 if (canceled) {
                     return;
                 }
-                string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.pdf");
-                await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
-                {
-                    await fileStream.WriteAsync(pdfContent, 0, pdfContent.Length);
-                    await Share.Default.RequestAsync(new ShareFileRequest
+                if (pdfContent.Length > 0) {
+                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.pdf");
+                    await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
-                        Title = "Share PDF file",
-                        File = new ShareFile(targetFile)
-                    });
+                        await fileStream.WriteAsync(pdfContent, 0, pdfContent.Length);
+                        await Share.Default.RequestAsync(new ShareFileRequest
+                        {
+                            Title = "Share PDF file",
+                            File = new ShareFile(targetFile)
+                        });
+                    }
                 }
             }
             catch (Exception ex)
@@ -344,15 +346,18 @@ namespace DWT_REST_MAUI
             try
             {
                 byte[] bytes = await _jsInterop.SaveAsPng(false);
-                string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.png");
-                await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
+                if (bytes.Length > 0)
                 {
-                    await fileStream.WriteAsync(bytes, 0, bytes.Length);
-                    await Share.Default.RequestAsync(new ShareFileRequest
+                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.png");
+                    await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
-                        Title = "Share PNG file",
-                        File = new ShareFile(targetFile)
-                    });
+                        await fileStream.WriteAsync(bytes, 0, bytes.Length);
+                        await Share.Default.RequestAsync(new ShareFileRequest
+                        {
+                            Title = "Share PNG file",
+                            File = new ShareFile(targetFile)
+                        });
+                    }
                 }
             }
             catch (Exception ex)
