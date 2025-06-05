@@ -65,6 +65,20 @@ internal class SettingsViewModel : INotifyPropertyChanged
             }
         }
     }
+    private string _reloadButtonText = "Reload";
+    public string ReloadButtonText
+    {
+        get => _reloadButtonText;
+        set
+        {
+            if (_reloadButtonText != value)
+            {
+                _reloadButtonText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
 
     // IP Address
     private string _ipAddress;
@@ -272,8 +286,12 @@ internal class SettingsViewModel : INotifyPropertyChanged
     }
 
     public async void LoadScanners() {
+        if (ReloadButtonText == "Reloading...") {
+            return;
+        }
         try
         {
+            ReloadButtonText = "Reloading...";
             List<string> modelNames = new List<string>(); 
             var client = new DWTClient(new Uri(IpAddress), LicenseKey);
             var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
@@ -289,6 +307,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
         {
             Debug.WriteLine(ex.Message);
         }
+        ReloadButtonText = "Reload";
 
     }
 

@@ -39,7 +39,7 @@
                     <Picker.Items>
                     </Picker.Items>
                 </Picker>
-                <Button Text="Reload" Command="{Binding LoadScannersCommand}"></Button>
+                <Button Text="{Binding ReloadButtonText}" Command="{Binding LoadScannersCommand}"></Button>
             </VerticalStackLayout>
 
             <!-- DPI Radio Buttons -->
