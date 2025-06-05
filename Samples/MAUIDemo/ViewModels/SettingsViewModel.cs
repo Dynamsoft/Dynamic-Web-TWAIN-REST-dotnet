@@ -292,8 +292,6 @@ internal class SettingsViewModel : INotifyPropertyChanged
     private void ExecuteSaveSettings()
     {
         Debug.WriteLine($"Saved");
-        // Here you would implement your save logic
-        // For example, save to preferences or send to a service
         Debug.WriteLine($"Settings Saved:\n" +
                             $"License: {LicenseKey}\n" +
                             $"IP: {IpAddress}\n" +
@@ -308,10 +306,6 @@ internal class SettingsViewModel : INotifyPropertyChanged
         Preferences.Set("Duplex", Duplex);
         Preferences.Set("ColorMode", SelectedColorMode);
         Shell.Current.GoToAsync("../");
-        // In a real app, you might want to:
-        // Preferences.Set("LicenseKey", LicenseKey);
-        // Preferences.Set("IpAddress", IpAddress);
-        // etc...
     }
 
     // INotifyPropertyChanged implementation
