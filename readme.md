@@ -189,7 +189,7 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
    <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
    ```
    
-4. Create an instance of JSInterop.
+4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamosft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)).
 
    ```csharp
    private JSInterop _jsInterop = null;
