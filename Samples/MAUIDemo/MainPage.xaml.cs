@@ -94,8 +94,16 @@ namespace DWT_REST_MAUI
                 ResetViewer();
             }
             var currentPage = Shell.Current.CurrentState.Location.OriginalString;
-            Debug.WriteLine($"{currentPage}");
-            await Shell.Current.GoToAsync($"//{currentPage}"); //clear params
+            try
+            {
+                Debug.WriteLine($"{currentPage}");
+                await Shell.Current.GoToAsync($"//{currentPage}"); //clear params
+            }
+            catch (Exception e)
+            {
+
+                Debug.WriteLine(e.Message);
+            }
         }
 
         private async void ResetViewer() { 
