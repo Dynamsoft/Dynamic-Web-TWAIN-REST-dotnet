@@ -253,6 +253,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
             if (result.StartsWith("https"))
             {
                 IpAddress = result;
+                LoadScanners();
             }
         }
     }
