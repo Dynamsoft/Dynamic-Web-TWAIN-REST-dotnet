@@ -230,6 +230,9 @@ internal class SettingsViewModel : INotifyPropertyChanged
     }
 
     public async void FindServices() {
+        if (FindServiceButtonText == "Finding...") {
+            return;
+        }
         FindServiceButtonText = "Finding...";
         IServiceInfo[] results = await ServiceFinder.DiscoverServicesAsync();
         FindServiceButtonText = "Find services";
