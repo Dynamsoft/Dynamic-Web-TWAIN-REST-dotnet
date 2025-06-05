@@ -216,7 +216,7 @@ namespace DWT_REST_MAUI
         private async void OnActionItemClicked(object sender, EventArgs args)
         {
             string result = await DisplayActionSheet("Select an action", "Cancel", null, "Scan with scanner", "Scan with camera", 
-                "Edit", "Settings", "Save as PDF", "Save as PNG", 
+                "Edit", "Settings", "Save as PDF", "Save selected as PNG", 
                 "Open a local file");
 
             if (result == "Scan with scanner")
@@ -244,7 +244,7 @@ namespace DWT_REST_MAUI
             {
                 SaveAsPDF();
             }
-            else if (result == "Save as PNG") 
+            else if (result == "Save selected as PNG") 
             {
                 SaveAsPNG();
             }
