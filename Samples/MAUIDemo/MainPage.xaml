@@ -12,6 +12,6 @@
     <Grid RowDefinitions="Auto,*"
       ColumnDefinitions="*">
         <HybridWebView x:Name="webView"
-                   Grid.Row="1" DefaultFile="index.html" />
+                   Grid.Row="1" />
     </Grid>
 </ContentPage>

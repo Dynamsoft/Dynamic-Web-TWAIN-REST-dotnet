@@ -21,7 +21,7 @@ The whole solution enables developers to create desktop or cross-platform applic
 
 You need to reference the projects and add them as dependencies.
 
-If you need to copy the web resources in the service package to your .NET MAUI project as well. You need to add the following to your project.
+If you need to copy the service files and web resources (for MAUI) in the service package to your project, you need to add the following to your project.
 
 ```xml
 <!--update the path based on your setup-->
@@ -42,7 +42,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    
    This requires you to install Dynamic Web TWAIN service beforehand (install the service by visiting [the online demo](https://demo.dynamsoft.com/web-twain/)).
    
-   You can also embed the service in your app by using the service package. Currently, only Windows is supported.
+   You can also embed the service in your app by using the service package (no installation of service is required using this way). Currently, only Windows is supported.
    
    ```csharp
    var serviceManager = new ServiceManager();
@@ -65,7 +65,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
    options.Config = new ScannerConfiguration();
    options.Config.IfFeederEnabled = true;
    options.Config.IfDuplexEnabled = true;
-   var job = await DWTClient.ScannerControlClient.ScannerJobs.CreateJob(options);
+   var job = await client.ScannerControlClient.ScannerJobs.CreateJob(options);
    await job.StartJob();
    ```
    
@@ -79,6 +79,7 @@ If you need to copy the web resources in the service package to your .NET MAUI p
        if (result == null)
        {
            await job.DeleteJob();
+           break;
        }
        else
        {
@@ -181,14 +182,14 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
 
    For WebView2, if you are using the service package, the web page already exists in the service's [folder](./DynamicWebTWAIN.Service/PackService/content/common/dynamsoft.dwt.service/app/site/default/) and we can load it via URL. If you installed the service via the installers, you need to copy the web page to the service's `app/site/default/` folder.
    
-   For HybridWebView, you need to copy the web page to the `Resources/raw/ddv` folder. You can also add the following to your project to use the files packed in the service package.
+   For HybridWebView, you need to copy the web page to the `Resources/raw/ddv` folder. If you've added the following to your project, it will copy the web page packed in the service package to your app's root.
 
    ```xml
    <!--update the path based on your setup-->
    <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
    ```
    
-4. Create an instance of JSInterop.
+4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamosft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)).
 
    ```csharp
    private JSInterop _jsInterop = null;
@@ -221,10 +222,10 @@ We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned
 ## Samples
 
 * [WPFDemo](./Samples/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
-* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI which is mainly designed for the mobile platform. 
-* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample which scans document images into a viewer
-* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample which scans document images into a viewer
-* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample which scans document images into a viewer
+* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI that is mainly designed for the mobile platform. 
+* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample that scans document images into a viewer.
+* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample that scans document images into a viewer.
+* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample that scans document images into a viewer.
 
 The samples all use the Document Viewer in a WebView.
 

@@ -18,3 +18,10 @@ Stop a running service:
 ```csharp
 serviceManager.Dispose();
 ```
+
+In addition, if you need to copy the service files and web resources in the service package to your project, you need to add the following to your project.
+
+```xml
+<!--update the path based on your setup-->
+<Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
+```

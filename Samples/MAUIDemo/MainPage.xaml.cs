@@ -2,7 +2,6 @@
 using Dynamsoft.DocumentViewer;
 using System.Diagnostics;
 using DynamicWebTWAIN.Service;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace DWT_REST_MAUI
 {
@@ -47,7 +46,7 @@ namespace DWT_REST_MAUI
         }
 
     }
-
+    [QueryProperty(nameof(LicenseChanged), "licenseChanged")]
     public partial class MainPage : ContentPage
     {
         private ServiceManager _serviceManager;
@@ -55,9 +54,21 @@ namespace DWT_REST_MAUI
         private Dynamsoft.DocumentViewer.JSInterop _jsInterop;
         private IScannerJobClient? scannerJob;
         private Boolean isDesktop;
-        private string productKey = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAwMjI3NzYzLVRYbFFjbTlxIiwibWFpblNlcnZlclVSTCI6Imh0dHBzOi8vbWx0cy5keW5hbXNvZnQuY29tIiwib3JnYW5pemF0aW9uSUQiOiIxMDAyMjc3NjMiLCJzdGFuZGJ5U2VydmVyVVJMIjoiaHR0cHM6Ly9zbHRzLmR5bmFtc29mdC5jb20iLCJjaGVja0NvZGUiOjE4OTc4MDUzNDV9";
+        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
+        string licenseChanged;
 
-        private string readBarcodeProductKey = "t0073hgAAAGWZfDlYbWB4VK0AMtpnX+caSb9KgGJnrDWAxP/CRBcOTyRQnBgDrqHLJtrmDUmBRlp5eQSiFFlTH1NDSh/+2kgHA0UbaA==";
+        public string LicenseChanged
+        {
+            get => licenseChanged;
+            set
+            {
+                licenseChanged = value;
+                if (licenseChanged == "true")
+                {
+                    AskWhetherToReload();
+                }
+            }
+        }
 
         public MainPage()
         {
@@ -66,7 +77,6 @@ namespace DWT_REST_MAUI
 #else
             isDesktop = false;
 #endif
-            isDesktop = false;
             InitializeComponent();
             webView.SetInvokeJavaScriptTarget(this);
             InitViewer();
@@ -75,6 +85,30 @@ namespace DWT_REST_MAUI
 
         private async void RequestCameraPermission() {
             PermissionStatus status = await Permissions.RequestAsync<Permissions.Camera>();
+        }
+
+        private async void AskWhetherToReload() {
+            bool answer = await DisplayAlert("Question?", "License is changed. Do you want to reload the page to make it effective?", "Yes", "No");
+            if (answer) {
+                Debug.WriteLine("reset viewer");
+                ResetViewer();
+            }
+            var currentPage = Shell.Current.CurrentState.Location.OriginalString;
+            try
+            {
+                Debug.WriteLine($"{currentPage}");
+                await Shell.Current.GoToAsync($"//{currentPage}"); //clear params
+            }
+            catch (Exception e)
+            {
+
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        private async void ResetViewer() { 
+            await webView.EvaluateJavaScriptAsync("location.reload();");
+            InitViewer();
         }
 
         private async void InitViewer()
@@ -122,7 +156,7 @@ namespace DWT_REST_MAUI
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            PickAndShow().Wait();
+                            _ = PickAndShow();
                         });
                     }
                     return true;
@@ -190,7 +224,7 @@ namespace DWT_REST_MAUI
         private async void OnActionItemClicked(object sender, EventArgs args)
         {
             string result = await DisplayActionSheet("Select an action", "Cancel", null, "Scan with scanner", "Scan with camera", 
-                "Edit", "Settings", "Save as PDF", "Save as PNG", 
+                "Edit", "Settings", "Save as PDF", "Save selected as PNG", 
                 "Open a local file");
 
             if (result == "Scan with scanner")
@@ -218,7 +252,7 @@ namespace DWT_REST_MAUI
             {
                 SaveAsPDF();
             }
-            else if (result == "Save as PNG") 
+            else if (result == "Save selected as PNG") 
             {
                 SaveAsPNG();
             }
@@ -286,15 +320,17 @@ namespace DWT_REST_MAUI
                 if (canceled) {
                     return;
                 }
-                string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.pdf");
-                await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
-                {
-                    await fileStream.WriteAsync(pdfContent, 0, pdfContent.Length);
-                    await Share.Default.RequestAsync(new ShareFileRequest
+                if (pdfContent.Length > 0) {
+                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.pdf");
+                    await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
-                        Title = "Share PDF file",
-                        File = new ShareFile(targetFile)
-                    });
+                        await fileStream.WriteAsync(pdfContent, 0, pdfContent.Length);
+                        await Share.Default.RequestAsync(new ShareFileRequest
+                        {
+                            Title = "Share PDF file",
+                            File = new ShareFile(targetFile)
+                        });
+                    }
                 }
             }
             catch (Exception ex)
@@ -318,15 +354,18 @@ namespace DWT_REST_MAUI
             try
             {
                 byte[] bytes = await _jsInterop.SaveAsPng(false);
-                string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.png");
-                await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
+                if (bytes.Length > 0)
                 {
-                    await fileStream.WriteAsync(bytes, 0, bytes.Length);
-                    await Share.Default.RequestAsync(new ShareFileRequest
+                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "out.png");
+                    await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
-                        Title = "Share PNG file",
-                        File = new ShareFile(targetFile)
-                    });
+                        await fileStream.WriteAsync(bytes, 0, bytes.Length);
+                        await Share.Default.RequestAsync(new ShareFileRequest
+                        {
+                            Title = "Share PNG file",
+                            File = new ShareFile(targetFile)
+                        });
+                    }
                 }
             }
             catch (Exception ex)

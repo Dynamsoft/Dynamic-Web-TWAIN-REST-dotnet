@@ -65,6 +65,20 @@ internal class SettingsViewModel : INotifyPropertyChanged
             }
         }
     }
+    private string _reloadButtonText = "Reload";
+    public string ReloadButtonText
+    {
+        get => _reloadButtonText;
+        set
+        {
+            if (_reloadButtonText != value)
+            {
+                _reloadButtonText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
 
     // IP Address
     private string _ipAddress;
@@ -216,6 +230,9 @@ internal class SettingsViewModel : INotifyPropertyChanged
     }
 
     public async void FindServices() {
+        if (FindServiceButtonText == "Finding...") {
+            return;
+        }
         FindServiceButtonText = "Finding...";
         IServiceInfo[] results = await ServiceFinder.DiscoverServicesAsync();
         FindServiceButtonText = "Find services";
@@ -232,14 +249,18 @@ internal class SettingsViewModel : INotifyPropertyChanged
         }
         string result = await _dialogService.ShowActionSheetAsync("Select an address", "Cancel", null, addresses.ToArray());
         Debug.WriteLine(result);
-        if (result.StartsWith("https")) {
-            IpAddress = result;
+        if (!string.IsNullOrEmpty(result)) {
+            if (result.StartsWith("https"))
+            {
+                IpAddress = result;
+                LoadScanners();
+            }
         }
     }
 
     public void LoadPreferences() {
         LicenseKey = Preferences.Get("License", "");
-        IpAddress = Preferences.Get("IP", "http://127.0.0.1:18623");
+        IpAddress = Preferences.Get("IP", "https://127.0.0.1:18623");
         Duplex = Preferences.Get("Duplex", false);
         AutoFeeder = Preferences.Get("AutoFeeder", false);
         int DPI = Preferences.Get("DPI",150);
@@ -269,8 +290,12 @@ internal class SettingsViewModel : INotifyPropertyChanged
     }
 
     public async void LoadScanners() {
+        if (ReloadButtonText == "Reloading...") {
+            return;
+        }
         try
         {
+            ReloadButtonText = "Reloading...";
             List<string> modelNames = new List<string>(); 
             var client = new DWTClient(new Uri(IpAddress), LicenseKey);
             var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
@@ -286,20 +311,20 @@ internal class SettingsViewModel : INotifyPropertyChanged
         {
             Debug.WriteLine(ex.Message);
         }
+        ReloadButtonText = "Reload";
 
     }
 
     private void ExecuteSaveSettings()
     {
         Debug.WriteLine($"Saved");
-        // Here you would implement your save logic
-        // For example, save to preferences or send to a service
         Debug.WriteLine($"Settings Saved:\n" +
                             $"License: {LicenseKey}\n" +
                             $"IP: {IpAddress}\n" +
                             $"Scanner: {SelectedScannerModel}\n" +
                             $"DPI: {SelectedDpi}\n" +
                             $"Color Mode: {SelectedColorMode}");
+        var previousLicense = Preferences.Get("License", "");
         Preferences.Set("License", LicenseKey);
         Preferences.Set("IP", IpAddress);
         Preferences.Set("Scanner", SelectedScannerModel);
@@ -307,11 +332,14 @@ internal class SettingsViewModel : INotifyPropertyChanged
         Preferences.Set("AutoFeeder", AutoFeeder);
         Preferences.Set("Duplex", Duplex);
         Preferences.Set("ColorMode", SelectedColorMode);
-        Shell.Current.GoToAsync("../");
-        // In a real app, you might want to:
-        // Preferences.Set("LicenseKey", LicenseKey);
-        // Preferences.Set("IpAddress", IpAddress);
-        // etc...
+        if (!previousLicense.Equals(LicenseKey))
+        {
+            Shell.Current.GoToAsync("../?licenseChanged=true");
+        }
+        else {
+            Shell.Current.GoToAsync("../");
+        }
+            
     }
 
     // INotifyPropertyChanged implementation

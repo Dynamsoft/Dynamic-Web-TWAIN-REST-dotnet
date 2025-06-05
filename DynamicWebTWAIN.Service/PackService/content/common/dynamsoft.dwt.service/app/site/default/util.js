@@ -196,7 +196,8 @@ class MyDesktopViewer extends MyViewer {
                             click: "back"
                         }
                     },
-                    Dynamsoft.DDV.Elements.Pagination
+                    Dynamsoft.DDV.Elements.Pagination,
+                    Dynamsoft.DDV.Elements.Blank
                 ],
                 },
                 Dynamsoft.DDV.Elements.MainView,
