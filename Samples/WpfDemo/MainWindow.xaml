@@ -127,7 +127,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" BorderThickness="0,0,0,0" BorderBrush="#FFAEAEAE">
-                <wv2:WebView2 x:Name="webView" Margin="0,0,0,-23" />
+                <wv2:WebView2 x:Name="webView" Margin="0,0,0,0" />
             </Border>
         </Grid>
 
