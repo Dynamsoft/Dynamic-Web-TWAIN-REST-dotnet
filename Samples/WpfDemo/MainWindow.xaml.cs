@@ -151,10 +151,53 @@ namespace WpfDemo
         public static readonly string strCurrentDirectory;
         public static readonly string strTessdataDirectory;
         public static readonly string mSettingsPath;
+        private string _mouseShape = "hand";
+        private string _annotationType = "";
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
+
+            if (btn.Name == "btnHand" && _mouseShape == "hand")
+            {
+                return;
+            }
+            else if (btn.Name == "btnArrow" && _mouseShape == "crop")
+            {
+                return;
+            }
+            else if (btn.Name == "btnLine" && _annotationType == "line")
+            {
+                return;
+            }
+            else if (btn.Name == "btnPolyline" && _annotationType == "polyline")
+            {
+                return;
+            }
+            else if (btn.Name == "btnRectangle" && _annotationType == "rectangle")
+            {
+                return;
+            }
+            else if (btn.Name == "btnEclipse" && _annotationType == "ellipse")
+            {
+                return;
+            }
+            else if (btn.Name == "btnText" && _annotationType == "text")
+            {
+                return;
+            }
+            else if (btn.Name == "btnTextBox" && _annotationType == "textbox")
+            {
+                return;
+            }
+            else if (btn.Name == "btnInk" && _annotationType == "ink")
+            {
+                return;
+            }
+            else if (btn.Name == "btnStamp" && _annotationType == "stamp")
+            {
+                return;
+            }
 
             string key = "hover/" + btn.Tag;
             if (!icons.ContainsKey(key))
@@ -175,6 +218,47 @@ namespace WpfDemo
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
+
+            if (btn.Name == "btnHand" && _mouseShape == "hand")
+            {
+                return;
+            }
+            else if (btn.Name == "btnArrow" && _mouseShape == "crop")
+            {
+                return;
+            }
+            else if (btn.Name == "btnLine" && _annotationType == "line")
+            {
+                return;
+            }
+            else if (btn.Name == "btnPolyline" && _annotationType == "polyline")
+            {
+                return;
+            }
+            else if (btn.Name == "btnRectangle" && _annotationType == "rectangle")
+            {
+                return;
+            }
+            else if (btn.Name == "btnEclipse" && _annotationType == "ellipse")
+            {
+                return;
+            }
+            else if (btn.Name == "btnText" && _annotationType == "text")
+            {
+                return;
+            }
+            else if (btn.Name == "btnTextBox" && _annotationType == "textbox")
+            {
+                return;
+            }
+            else if (btn.Name == "btnInk" && _annotationType == "ink")
+            {
+                return;
+            }
+            else if (btn.Name == "btnStamp" && _annotationType == "stamp")
+            {
+                return;
+            }
 
             string key = "normal/" + btn.Tag;
             if (!icons.ContainsKey(key))
@@ -197,26 +281,26 @@ namespace WpfDemo
             Button_MouseLeave(sender, null);
 
             Button btn = (Button)sender;
-            //if (btn.Name == "btnHand" && dsViewer.MouseShape)
-            //{
-            //    MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
-            //    args.RoutedEvent = Button.PreviewMouseDownEvent;
-            //    Button_PreviewMouseDown(sender, args);
+            if (btn.Name == "btnHand" && _mouseShape == "hand")
+            {
+                MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+                args.RoutedEvent = Button.PreviewMouseDownEvent;
+                Button_PreviewMouseDown(sender, args);
 
-            //    MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
-            //    argsA.RoutedEvent = Button.MouseLeaveEvent;
-            //    Button_MouseLeave(btnArrow, argsA);
-            //}
-            //else if (btn.Name == "btnArrow" && !dsViewer.MouseShape)
-            //{
-            //    MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
-            //    args.RoutedEvent = Button.PreviewMouseDownEvent;
-            //    Button_PreviewMouseDown(sender, args);
+                MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+                argsA.RoutedEvent = Button.MouseLeaveEvent;
+                Button_MouseLeave(btnArrow, argsA);
+            }
+            else if (btn.Name == "btnArrow" && _mouseShape == "crop")
+            {
+                MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+                args.RoutedEvent = Button.PreviewMouseDownEvent;
+                Button_PreviewMouseDown(sender, args);
 
-            //    MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
-            //    argsA.RoutedEvent = Button.MouseLeaveEvent;
-            //    Button_MouseLeave(btnHand, argsA);
-            //}
+                MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+                argsA.RoutedEvent = Button.MouseLeaveEvent;
+                Button_MouseLeave(btnHand, argsA);
+            }
         }
 
         private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -333,11 +417,45 @@ namespace WpfDemo
         private void Hand_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetCursorToPan();
+            _mouseShape = "hand";
+            _annotationType = "";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Arrow_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetCursorToCrop();
+            _mouseShape = "crop";
+            _annotationType = "";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e)
@@ -368,40 +486,157 @@ namespace WpfDemo
         private void Line_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Line);
+            _annotationType = "line";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
         private void Polyline_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Polyline);
+            _annotationType = "polyline";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Rectangle_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Rectangle);
+            _annotationType = "rectangle";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Eclipse_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Ellipse);
+            _annotationType = "ellipse";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Text_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.TextTypewriter);
+            _annotationType = "text";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void TextBox_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.TextBox);
+            _annotationType = "textbox";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnInk, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Ink_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Ink);
+            _annotationType = "ink";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnStamp, argsA);
         }
 
         private void Stamp_Click(object sender, RoutedEventArgs e)
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Stamp);
+            _annotationType = "stamp";
+            MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+            args.RoutedEvent = Button.PreviewMouseDownEvent;
+            Button_PreviewMouseDown(sender, args);
+
+            MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnArrow, argsA);
+            Button_MouseLeave(btnLine, argsA);
+            Button_MouseLeave(btnPolyline, argsA);
+            Button_MouseLeave(btnRectangle, argsA);
+            Button_MouseLeave(btnEclipse, argsA);
+            Button_MouseLeave(btnText, argsA);
+            Button_MouseLeave(btnTextBox, argsA);
+            Button_MouseLeave(btnInk, argsA);
         }
 
         private void Undo_Click(object sender, RoutedEventArgs e)
