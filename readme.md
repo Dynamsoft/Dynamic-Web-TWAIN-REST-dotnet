@@ -17,6 +17,13 @@ The whole solution enables developers to create desktop or cross-platform applic
 * ICA (macOS)
 * eSCL (AirScan / Mopria)
 
+## Requirements
+
+* .NET Standard 2.0 or greater
+* .NET 4.6.1 (Desktop / Server) or greater
+
+To open the samples, you need Visual Studio 2022 and .NET 9+.
+
 ## Installation
 
 You need to reference the projects and add them as dependencies.
