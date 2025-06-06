@@ -218,7 +218,13 @@ class MyDesktopViewer extends MyViewer {
         this.fullFeatureEditViewer = new Dynamsoft.DDV.EditViewer({
             container: "container",
             uiConfig: fullFeatureConfig,
-            groupUid: groupUid
+            groupUid: groupUid,
+			viewerConfig: {
+				scrollToLatest: true,
+            },
+            thumbnailConfig: {
+				scrollToLatest: true,
+			}
         });
         this.fullFeatureEditViewer.hide();
         this.fullFeatureEditViewer.on("back",() => {
@@ -232,7 +238,8 @@ class MyDesktopViewer extends MyViewer {
             viewerConfig: {
                 canvasStyle: {
                     background: "rgb(255,255,255)"
-                }
+                },
+				scrollToLatest: true,
             },
             thumbnailConfig: {
                 visibility: "visible",
@@ -255,7 +262,8 @@ class MyDesktopViewer extends MyViewer {
                 hoveredPageStyle: {
                     border: "0px solid blue",
                     background: "rgb(229,243,255)"
-                }
+                },
+				scrollToLatest: true,
             },
             annotationConfig: {
                 enableContinuousDrawing: true
