@@ -47,13 +47,13 @@ If you need to copy the service files and web resources (for MAUI) in the servic
    var client = new DWTClient(new Uri(address), license);
    ```
    
-   This requires you to install Dynamic Web TWAIN service beforehand (install the service by visiting [the online demo](https://demo.dynamsoft.com/web-twain/)).
+   This requires you to install Dynamic Web TWAIN service beforehand ([download](#web-twain-service-installers)).
    
    You can also embed the service in your app by using the service package (no installation of service is required using this way). Currently, only Windows is supported.
    
    ```csharp
    var serviceManager = new ServiceManager();
-   serviceManager.CreateService();
+   serviceManager.CreateService(); //create a service instance
    var address = serviceManager.Service.BaseAddress; //get the address for the REST client to use
    ```
 
@@ -98,7 +98,7 @@ If you need to copy the service files and web resources (for MAUI) in the servic
 
 ### Use the Document Viewer
 
-We can embed Dynamsoft Document Viewer in a WebView to view and edit the scanned document images and save the images as PDF.
+We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html) in a WebView to view and edit the scanned document images and save the images as PDF.
 
 
 1. Add a WebView in your app, like WebView2 for WinForm/WPF and HybridWebView for MAUI.
@@ -241,3 +241,11 @@ The samples all use the Document Viewer in a WebView.
 * [Dynamsoft Document Viewer Documentation](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html)
 * [RESTful API Documentation](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html)
 
+## Web TWAIN Service Installers
+
+
+| Platform      | Download Link |
+| ------------- | --------------- |
+| Windows       | [Dynamic-Web-TWAIN-Service-Setup.msi](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup.msi)       |
+| macOS         | [Dynamic-Web-TWAIN-Service-Setup.pkg](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup.pkg)        |
+| Linux         | [Dynamic-Web-TWAIN-Service-Setup.deb](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup.deb) <br/> [Dynamic-Web-TWAIN-Service-Setup-arm64.deb](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup-arm64.deb) <br/> [Dynamic-Web-TWAIN-Service-Setup-mips64el.deb](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup-mips64el.deb) <br/> [Dynamic-Web-TWAIN-Service-Setup.rpm](https://demo.dynamsoft.com/DWT/DWTResources/dist/DynamicWebTWAINServiceSetup.rpm)|
