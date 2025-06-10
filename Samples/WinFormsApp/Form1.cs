@@ -14,11 +14,11 @@ namespace WinFormsApp
             _webView = webView;
         }
 
-        public async Task<string> ExecuteJavaScriptAsync(string script)
+        public async Task<string?> ExecuteJavaScriptAsync(string script) // Change return type to string? to allow null
         {
             if (_webView is Control control && control.InvokeRequired)
             {
-                string result = null;
+                string? result = null; // Change type to string? to allow null
                 control.Invoke(new Action(async () =>
                 {
                     result = await _webView.ExecuteScriptAsync(script);
