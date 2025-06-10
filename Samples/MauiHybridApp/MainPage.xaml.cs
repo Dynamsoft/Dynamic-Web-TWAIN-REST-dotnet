@@ -50,6 +50,8 @@ namespace MauiHybridWebViewApp
     {
         private Dynamsoft.DocumentViewer.JSInterop _jsInterop;
         private ServiceManager _serviceManager;
+        private IReadOnlyList<Scanner> _scanners;
+        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
 
         public MainPage()
         {
@@ -68,7 +70,7 @@ namespace MauiHybridWebViewApp
                 base.OnAppearing();
 
                 JSInteropOptions options = new JSInteropOptions();
-                options.ProductKey = "t0131DQEAAJ/lU28fZecBIvVDoVs4/k5Ks8uXHXt20fnA2utzW/9gEiH37ujt2ws6Fe8k2rQE845RQ+mf2YkuC/A9hMIQng8ppTmpxUpW0cZAt+oACSMQYQYijEGEKYgwARIGZjqGprG1CGcYGCRCmEDXpKUZIqyC2GFibmhoAgwGAPLTOE4=";
+                options.ProductKey = productKey;
 
 #if WINDOWS || MACCATALYST
                 options.SiteUrl = "index.html";
@@ -92,6 +94,15 @@ namespace MauiHybridWebViewApp
                     _serviceManager.Service.BaseAddress);
 #endif
                 await _jsInterop.EnsureInitializedAsync();
+
+                _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
+
+                foreach (var scanner in _scanners)
+                {
+                    cbxSources.Items.Add(scanner.Name);
+                }
+
+                cbxSources.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -111,6 +122,58 @@ namespace MauiHybridWebViewApp
 
             _jsInterop.DWTClient?.Dispose();
             _serviceManager?.Dispose();
+        }
+
+        private async void btnSaveAsPdf_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var pdf = await _jsInterop.SaveAsPdf(PageOption.All, PdfPageType.PageDefault, SaveAnnotationMode.Annotation, "");
+                string filePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MauiHybridWebViewAppOutput.pdf");
+                File.WriteAllBytes(filePath, pdf);
+                await DisplayAlert("Save", filePath, "OK");
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert("Alert", ex.Message, "OK");
+                    });
+                }
+            }
+        }
+
+        private async void btnScanToView_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CreateScanJobOptions options = new CreateScanJobOptions();
+                options.Device = _scanners[cbxSources.SelectedIndex].Device;
+                options.AutoRun = false;
+                options.RequireWebsocket = true;
+#if ANDROID || IOS
+                // default we use self-signed certificate, so we need to set this to false
+                options.RequireWebsocket = false;
+#endif
+                options.Config = new ScannerConfiguration();
+                //options.Config.XferCount = 7;
+                options.Config.IfFeederEnabled = true;
+                options.Config.IfDuplexEnabled = false;
+                await _jsInterop.ScanImageToView(options);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert("Alert", ex.Message, "OK");
+                    });
+                }
+            }
+
         }
     }
 

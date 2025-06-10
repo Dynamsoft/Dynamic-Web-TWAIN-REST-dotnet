@@ -9,6 +9,14 @@
 
         <HorizontalStackLayout Grid.Row="0"
                                Spacing="12">
+            <Label Text="Select Source:"
+           VerticalOptions="Center"
+           FontSize="14"/>
+
+            <Picker x:Name="cbxSources"
+            Title=""
+            WidthRequest="200"
+            VerticalOptions="Center"/>
             <Button Text="ScanToView" Clicked="btnScanToView_Click"/>
             <Button Text="SaveAsPdf" Clicked="btnSaveAsPdf_Click"/>
         </HorizontalStackLayout>
