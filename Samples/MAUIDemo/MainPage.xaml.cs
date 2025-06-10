@@ -396,13 +396,9 @@ namespace DWT_REST_MAUI
                 if (license == "") {
                     license = productKey;
                 }
-
-                if (null == _jsInterop.DWTClient) {
-                    var IPAddress = Preferences.Get("IP", "http://127.0.0.1:18622");
-                    var client = new DWTClient(new Uri(IPAddress), license);
-                    _jsInterop.DWTClient = client;
-                }
-
+                var IPAddress = Preferences.Get("IP", defaultAddress);
+                var client = new DWTClient(new Uri(IPAddress), license);
+                _jsInterop.DWTClient = client;
                 var DPI = Preferences.Get("DPI", 150);
                 var colorMode = Preferences.Get("ColorMode", "Color");
                 var scannerName = Preferences.Get("Scanner", "");
