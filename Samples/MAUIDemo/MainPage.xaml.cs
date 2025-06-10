@@ -55,6 +55,7 @@ namespace DWT_REST_MAUI
         private IScannerJobClient? scannerJob;
         private Boolean isDesktop;
         private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
+        public static string defaultAddress = "https://127.0.0.1:18623";
         string licenseChanged;
 
         public string LicenseChanged
@@ -74,6 +75,9 @@ namespace DWT_REST_MAUI
         {
 #if WINDOWS || MACCATALYST
             isDesktop = true;
+            _serviceManager = new ServiceManager(); // "dynamsoft.dwt.service"
+            _serviceManager.CreateService();
+            defaultAddress = _serviceManager.Service.BaseAddress.ToString();
 #else
             isDesktop = false;
 #endif
@@ -137,8 +141,6 @@ namespace DWT_REST_MAUI
                 var bridge = new HybridWebViewBridge(webView);
 
                 if (isDesktop) {
-                    _serviceManager = new ServiceManager(); // "dynamsoft.dwt.service"
-                    _serviceManager.CreateService();
                     _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                         bridge,
                         _serviceManager.Service.BaseAddress);
@@ -146,7 +148,7 @@ namespace DWT_REST_MAUI
                 else {
                     _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                         bridge,
-                        new Uri("http://127.0.0.1:18622"));
+                        new Uri(defaultAddress));
                 }
 
                 await _jsInterop.EnsureInitializedAsync();
@@ -394,7 +396,7 @@ namespace DWT_REST_MAUI
                 if (license == "") {
                     license = productKey;
                 }
-                var IPAddress = Preferences.Get("IP", "http://127.0.0.1:18622");
+                var IPAddress = Preferences.Get("IP", defaultAddress);
                 var client = new DWTClient(new Uri(IPAddress), license);
                 _jsInterop.DWTClient = client;
 
