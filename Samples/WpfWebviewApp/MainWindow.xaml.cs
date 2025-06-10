@@ -52,8 +52,6 @@ public partial class MainWindow : Window
 
     private Dynamsoft.DocumentViewer.JSInterop _jsInterop;
     private ServiceManager _serviceManager;
-    private IReadOnlyList<Scanner> _scanners;
-    private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
@@ -67,20 +65,11 @@ public partial class MainWindow : Window
             _serviceManager.CreateService();
             // because we load ddv page in the service, so we should make sure the service is running, so we need to set a long timeout
             // or manual create a websocket connection in js, recommend this way.
-            options.ProductKey = productKey;
+            options.ProductKey = "t0131DQEAAJ/lU28fZecBIvVDoVs4/k5Ks8uXHXt20fnA2utzW/9gEiH37ujt2ws6Fe8k2rQE845RQ+mf2YkuC/A9hMIQng8ppTmpxUpW0cZAt+oACSMQYQYijEGEKYgwARIGZjqGprG1CGcYGCRCmEDXpKUZIqyC2GFibmhoAgwGAPLTOE4=";
             _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                 new WpfWebViewBridge(webView),
                 _serviceManager.Service.BaseAddress);
             await _jsInterop.EnsureInitializedAsync();
-
-            _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
-
-            foreach (var scanner in _scanners)
-            {
-                cbxSources.Items.Add(scanner.Name);
-            }
-
-            cbxSources.SelectedIndex = 0;
         }
         catch (Exception ex)
         {
@@ -118,11 +107,10 @@ public partial class MainWindow : Window
         try
         {
             CreateScanJobOptions options = new CreateScanJobOptions();
-            options.Device = _scanners[cbxSources.SelectedIndex].Device;
             options.Config = new ScannerConfiguration();
-            //options.Config.XferCount = 7;
+            options.Config.XferCount = 7;
             options.Config.IfFeederEnabled = true;
-            options.Config.IfDuplexEnabled = false;
+            options.Config.IfDuplexEnabled = true;
             await _jsInterop.ScanImageToView(options);
         }
         catch (Exception ex)

@@ -21,7 +21,7 @@ namespace WpfDemo
     /// </summary>
     public partial class SaveWindow : Window
     {
-        private MainWindow _mainWindow;
+        private MainWindow _mainWindow = null;
         public SaveWindow(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -29,22 +29,19 @@ namespace WpfDemo
             {
                 lbSave.Background = new ImageBrush(new BitmapImage(new Uri(MainWindow.imageDirectory + @"normal\save_now.png", UriKind.RelativeOrAbsolute)));
             }
-            catch { }
+            catch{ }
             lbSave.IsEnabled = true;
             this.txtFileName.Text = "Output";
             this.cbFileType.Text = "PDF";
-            this._mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
+            this._mainWindow = mainWindow;
         }
 
         private void cbFileType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbFileType.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content != null)
+            if (cbFileType.SelectedItem is ComboBoxItem selectedItem)
             {
-                string? fileType = selectedItem.Content.ToString();
-                if (!string.IsNullOrEmpty(fileType))
-                {
-                    UpdateOptions(fileType);
-                }
+                string fileType = selectedItem.Content.ToString();
+                UpdateOptions(fileType);
             }
         }
 
@@ -136,12 +133,12 @@ namespace WpfDemo
                 return;
             }
 
-            // Updated line to handle potential null value safely by using null-coalescing operator.
-            string fileType = (cbFileType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty;
+            // Retrieve File Type
+            string fileType = (cbFileType.SelectedItem as ComboBoxItem)?.Content.ToString();
 
             // Retrieve Options
             bool saveAnnotations = false;
-            PageOption pageOption = PageOption.Current; // Default to "Save Current Page"
+            PageOption pageOption =  PageOption.Current; // Default to "Save Current Page"
             PdfPageType pdfPageType = PdfPageType.PageDefault;
             SaveAnnotationMode annotationMode = SaveAnnotationMode.None;
             string password = "";
@@ -169,13 +166,16 @@ namespace WpfDemo
                 }
             }
 
+            // Display Selected Options (for debugging)
+            //MessageBox.Show($"File Name: {fileName}\nFile Type: {fileType}\nSave Annotations: {saveAnnotations}\nSave Pages: {savePages}\nPage Type: {pageType}\nAnnotation: {annotation}\nPassword: {password}");
+
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             if (VerifyFileName(fileName))
             {
                 try
                 {
                     saveFileDialog.FileName = this.txtFileName.Text;
-                    byte[]? result = null; // Updated to use nullable byte array
+                    byte[] result = null;
 
                     if (fileType == "JPEG")
                     {
@@ -183,7 +183,7 @@ namespace WpfDemo
                         saveFileDialog.DefaultExt = "jpg";
                         if ((bool)saveFileDialog.ShowDialog().GetValueOrDefault() == true)
                         {
-                            result = await _mainWindow.JSInterop.SaveAsJpeg(saveAnnotations);
+                           result = await _mainWindow.JSInterop.SaveAsJpeg(saveAnnotations);                        
                         }
                     }
                     else if (fileType == "PNG")
@@ -213,15 +213,14 @@ namespace WpfDemo
                             result = await _mainWindow.JSInterop.SaveAsPdf(pageOption, pdfPageType, annotationMode, password);
                         }
                     }
-                    if (result != null) // Check for null before using the result
+                    if (null != result)
                     {
                         File.WriteAllBytes(saveFileDialog.FileName, result);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
+                    Application.Current.Dispatcher.Invoke(() => {
                         MessageBox.Show(ex.Message);
                     });
                 }
@@ -280,9 +279,8 @@ namespace WpfDemo
                 if (fileName.LastIndexOfAny(System.IO.Path.GetInvalidFileNameChars()) == -1)
                     return true;
             }
-            catch
+            catch (Exception e)
             {
-                // Exception handling logic can be added here if needed
             }
             MessageBox.Show("The file name contains invalid chars!", "Save Image To File", MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
