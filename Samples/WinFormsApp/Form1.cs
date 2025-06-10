@@ -14,11 +14,11 @@ namespace WinFormsApp
             _webView = webView;
         }
 
-        public async Task<string> ExecuteJavaScriptAsync(string script)
+        public async Task<string?> ExecuteJavaScriptAsync(string script) // Change return type to string? to allow null
         {
             if (_webView is Control control && control.InvokeRequired)
             {
-                string result = null;
+                string? result = null; // Change type to string? to allow null
                 control.Invoke(new Action(async () =>
                 {
                     result = await _webView.ExecuteScriptAsync(script);
@@ -55,6 +55,9 @@ namespace WinFormsApp
 
         private JSInterop _jsInterop;
         private ServiceManager _serviceManager;
+        private IReadOnlyList<Scanner> _scanners;
+        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
+
         private async void Window_Loaded(object sender, EventArgs e)
         {
             try 
@@ -67,11 +70,20 @@ namespace WinFormsApp
                 _serviceManager.CreateService();
                 // because we load ddv page in the service, so we should make sure the service is running, so we need to set a long timeout
                 // or manual create a websocket connection in js, recommend this way.
-                options.ProductKey = "t0131DQEAAJ/lU28fZecBIvVDoVs4/k5Ks8uXHXt20fnA2utzW/9gEiH37ujt2ws6Fe8k2rQE845RQ+mf2YkuC/A9hMIQng8ppTmpxUpW0cZAt+oACSMQYQYijEGEKYgwARIGZjqGprG1CGcYGCRCmEDXpKUZIqyC2GFibmhoAgwGAPLTOE4=";
+                options.ProductKey = productKey;
                 _jsInterop = new JSInterop(options,
                     new WinFormsWebViewBridge(webView),
                     _serviceManager.Service.BaseAddress);
                 await _jsInterop.EnsureInitializedAsync();
+
+                _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
+
+                foreach (var scanner in _scanners)
+                {
+                    cbxSources.Items.Add(scanner.Name);
+                }
+
+                cbxSources.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -120,10 +132,11 @@ namespace WinFormsApp
             try
             {
                 CreateScanJobOptions options = new CreateScanJobOptions();
+                options.Device = _scanners[cbxSources.SelectedIndex].Device;
                 options.Config = new ScannerConfiguration();
-                options.Config.XferCount = 7;
+                //options.Config.XferCount = 7;
                 options.Config.IfFeederEnabled = true;
-                options.Config.IfDuplexEnabled = true;
+                options.Config.IfDuplexEnabled = false;
                 await _jsInterop.ScanImageToView(options);
             }
             catch (Exception ex)
