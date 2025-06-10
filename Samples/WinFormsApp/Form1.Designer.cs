@@ -32,6 +32,8 @@
             webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             btnSaveAsPdf = new Button();
             btnScanToView = new Button();
+            labelSource = new Label();
+            cbxSources = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
             SuspendLayout();
             // 
@@ -45,10 +47,20 @@
             webView.Size = new Size(613, 426);
             webView.TabIndex = 0;
             webView.ZoomFactor = 1D;
+            // Label
+            labelSource.Location = new Point(640, 37);
+            labelSource.Text = "Select Source:";
+            labelSource.AutoSize = true;
+
+            // ComboBox
+            cbxSources.Location = new Point(640, 57);
+            cbxSources.Name = "cbxSources";
+            cbxSources.Width = 150;
+
             // 
             // btnSaveAsPdf
             // 
-            btnSaveAsPdf.Location = new Point(676, 77);
+            btnSaveAsPdf.Location = new Point(640, 147);
             btnSaveAsPdf.Name = "btnSaveAsPdf";
             btnSaveAsPdf.Size = new Size(90, 23);
             btnSaveAsPdf.TabIndex = 1;
@@ -56,7 +68,7 @@
             btnSaveAsPdf.UseVisualStyleBackColor = true;
             btnSaveAsPdf.Click += btnSaveAsPdf_Click;
 
-            btnScanToView.Location = new Point(676, 37);
+            btnScanToView.Location = new Point(640, 107);
             btnScanToView.Name = "btnScanToView";
             btnScanToView.Size = new Size(90, 23);
             btnScanToView.TabIndex = 1;
@@ -71,6 +83,8 @@
             ClientSize = new Size(800, 450);
             Controls.Add(btnScanToView);
             Controls.Add(btnSaveAsPdf);
+            Controls.Add(labelSource);
+            Controls.Add(cbxSources);
             Controls.Add(webView);
             Name = "Form1";
             Text = "Form1";
@@ -88,5 +102,7 @@
         private Microsoft.Web.WebView2.WinForms.WebView2 webView;
         private Button btnSaveAsPdf;
         private Button btnScanToView;
+        private Label labelSource;
+        private ComboBox cbxSources;
     }
 }
