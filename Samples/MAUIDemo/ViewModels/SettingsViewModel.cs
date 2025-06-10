@@ -78,7 +78,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
             }
         }
     }
-    
+
 
     // IP Address
     private string _ipAddress;
@@ -96,7 +96,7 @@ internal class SettingsViewModel : INotifyPropertyChanged
     }
 
     // Scanner Models
-    private List<string> _scannerModels = new List<string>{};
+    private List<string> _scannerModels = new List<string> { };
     public List<string> ScannerModels
     {
         get => _scannerModels;
@@ -229,8 +229,10 @@ internal class SettingsViewModel : INotifyPropertyChanged
         _dialogService = dialogService;
     }
 
-    public async void FindServices() {
-        if (FindServiceButtonText == "Finding...") {
+    public async void FindServices()
+    {
+        if (FindServiceButtonText == "Finding...")
+        {
             return;
         }
         FindServiceButtonText = "Finding...";
@@ -239,7 +241,8 @@ internal class SettingsViewModel : INotifyPropertyChanged
         List<string> addresses = new List<string>();
         foreach (var service in results)
         {
-            foreach (var address in service.Addresses) {
+            foreach (var address in service.Addresses)
+            {
                 string addressString = address.Address.ToString();
                 if (addressString.StartsWith("https"))
                 {
@@ -247,9 +250,11 @@ internal class SettingsViewModel : INotifyPropertyChanged
                 }
             }
         }
+        addresses.Add(MainPage.defaultAddress);
         string result = await _dialogService.ShowActionSheetAsync("Select an address", "Cancel", null, addresses.ToArray());
         Debug.WriteLine(result);
-        if (!string.IsNullOrEmpty(result)) {
+        if (!string.IsNullOrEmpty(result))
+        {
             if (result.StartsWith("https"))
             {
                 IpAddress = result;
@@ -258,13 +263,15 @@ internal class SettingsViewModel : INotifyPropertyChanged
         }
     }
 
-    public void LoadPreferences() {
+    public void LoadPreferences()
+    {
         LicenseKey = Preferences.Get("License", "");
-        IpAddress = Preferences.Get("IP", "https://127.0.0.1:18623");
+        IpAddress = Preferences.Get("IP", MainPage.defaultAddress);
         Duplex = Preferences.Get("Duplex", false);
         AutoFeeder = Preferences.Get("AutoFeeder", false);
-        int DPI = Preferences.Get("DPI",150);
-        if (DPI == 150) {
+        int DPI = Preferences.Get("DPI", 150);
+        if (DPI == 150)
+        {
             Is150Dpi = true;
         }
         else if (DPI == 300)
@@ -284,19 +291,22 @@ internal class SettingsViewModel : INotifyPropertyChanged
         {
             IsGrayscale = true;
         }
-        else if (SelectedColorMode == "Color") {
+        else if (SelectedColorMode == "Color")
+        {
             IsColor = true;
         }
     }
 
-    public async void LoadScanners() {
-        if (ReloadButtonText == "Reloading...") {
+    public async void LoadScanners()
+    {
+        if (ReloadButtonText == "Reloading...")
+        {
             return;
         }
         try
         {
             ReloadButtonText = "Reloading...";
-            List<string> modelNames = new List<string>(); 
+            List<string> modelNames = new List<string>();
             var client = new DWTClient(new Uri(IpAddress), LicenseKey);
             var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
             foreach (var scanner in scanners)
@@ -305,7 +315,18 @@ internal class SettingsViewModel : INotifyPropertyChanged
                 modelNames.Add(scanner.Name);
             }
             ScannerModels = modelNames;
-            SelectedScannerModel = Preferences.Get("Scanner", "");
+            var previousSelectedScanner = Preferences.Get("Scanner", "");
+            if (modelNames.Contains(previousSelectedScanner))
+            {
+                SelectedScannerModel = previousSelectedScanner;
+            }
+            else
+            {
+                if (modelNames.Count > 0)
+                {
+                    SelectedScannerModel = modelNames[0];
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -336,10 +357,11 @@ internal class SettingsViewModel : INotifyPropertyChanged
         {
             Shell.Current.GoToAsync("../?licenseChanged=true");
         }
-        else {
+        else
+        {
             Shell.Current.GoToAsync("../");
         }
-            
+
     }
 
     // INotifyPropertyChanged implementation
