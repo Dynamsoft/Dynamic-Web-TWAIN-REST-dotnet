@@ -39,9 +39,9 @@ namespace WpfDemo
                 };
             }
 
-            public async Task<string> ExecuteJavaScriptAsync(string script)
+            public async Task<string?> ExecuteJavaScriptAsync(string script)
             {
-                string result = null;
+                string? result = null;
                 await Application.Current.Dispatcher.InvokeAsync(async () =>
                 {
                     result = await _webView.ExecuteScriptAsync(script);
@@ -66,23 +66,28 @@ namespace WpfDemo
 
         static MainWindow()
         {
-            
             int index = System.Reflection.Assembly.GetExecutingAssembly().Location.IndexOf("WpfDemo");
             if (index != -1)
             {
                 strCurrentDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location.Substring(0, index);
                 imageDirectory = strCurrentDirectory + @"WpfDemo\Images\";
+                strTessdataDirectory = strCurrentDirectory + @"WpfDemo\Tessdata\"; // Initialize strTessdataDirectory  
+                mSettingsPath = strCurrentDirectory + @"WpfDemo\Settings\settings.json"; // Initialize mSettingsPath  
             }
             else
             {
                 index = System.Reflection.Assembly.GetExecutingAssembly().Location.LastIndexOf("\\");
                 if (index != -1)
                 {
-                    strCurrentDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location.Substring(0, index +1);
+                    strCurrentDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location.Substring(0, index + 1);
                 }
                 else
+                {
                     strCurrentDirectory = Environment.CurrentDirectory + "\\";
+                }
                 imageDirectory = strCurrentDirectory + @"\Images\";
+                strTessdataDirectory = strCurrentDirectory + @"\Tessdata\"; // Initialize strTessdataDirectory  
+                mSettingsPath = strCurrentDirectory + @"\Settings\settings.json"; // Initialize mSettingsPath  
             }
         }
 
@@ -106,8 +111,8 @@ namespace WpfDemo
             int index = System.Reflection.Assembly.GetExecutingAssembly().Location.IndexOf("Demos");
         }
 
-        private Dynamsoft.DocumentViewer.JSInterop _jsInterop = null;
-        private ServiceManager _serviceManager = null;
+        private Dynamsoft.DocumentViewer.JSInterop _jsInterop = null!;
+        private ServiceManager _serviceManager = null!;
 
         public Dynamsoft.DocumentViewer.JSInterop JSInterop
         {
@@ -215,7 +220,7 @@ namespace WpfDemo
             catch { }
         }
 
-        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        private void Button_MouseLeave(object sender, MouseEventArgs? e)
         {
             Button btn = (Button)sender;
 
@@ -278,7 +283,10 @@ namespace WpfDemo
 
         private void Button_Loaded(object sender, RoutedEventArgs e)
         {
-            Button_MouseLeave(sender, null);
+            if (sender is Button button)
+            {
+                Button_MouseLeave(button, new MouseEventArgs(Mouse.PrimaryDevice, 0));
+            }
 
             Button btn = (Button)sender;
             if (btn.Name == "btnHand" && _mouseShape == "hand")
@@ -355,39 +363,43 @@ namespace WpfDemo
 
         private async void Scan_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (sender is Button button)
             {
-                (sender as Button).IsEnabled = false;
-
-                var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
-
-                if (scanners.Count > 0)
+                try
                 {
-                    ScanWindow scanWnd = new ScanWindow(this, scanners);
-                    scanWnd.Owner = this;
-                    scanWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    scanWnd.ShowDialog();
+                    button.IsEnabled = false;
 
-                    // Ensure the main window regains focus
-                    this.Activate();
+                    var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
+
+                    if (scanners.Count > 0)
+                    {
+                        ScanWindow scanWnd = new ScanWindow(this, scanners);
+                        scanWnd.Owner = this;
+                        scanWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                        scanWnd.ShowDialog();
+
+                        // Ensure the main window regains focus
+                        this.Activate();
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show("There is no scanner!", "Scan Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        });
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Application.Current.Dispatcher.Invoke(() => {
-                      MessageBox.Show("There is no scanner!", "Scan Warning", MessageBoxButton.OK, MessageBoxImage.Warning);  
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(ex.Message);
                     });
                 }
-
-            }
-            catch (Exception ex)
-            {
-                Application.Current.Dispatcher.Invoke(() => {
-                    MessageBox.Show(ex.Message);
-                });
-            }
-            finally
-            {
-                (sender as Button).IsEnabled = true;
+                finally
+                {
+                    button.IsEnabled = true;
+                }
             }
         }
 
@@ -396,7 +408,7 @@ namespace WpfDemo
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "All Supported Files(*.jpg;*.jpe;*.jpeg;*.jfif;*.bmp;*.png;*.tif;*.tiff;*.pdf;*.gif)|*.jpg;*.jpe;*.jpeg;*.jfif;*.bmp;*.png;*.tif;*.tiff;*.pdf;*.gif|JPEG(*.jpg;*.jpeg;*.jpe;*.jfif)|*.jpg;*.jpeg;*.jpe;*.jfif|BMP(*.bmp)|*.bmp|PNG(*.png)|*.png|TIFF(*.tif;*.tiff)|*.tif;*.tiff|PDF(*.pdf)|*.pdf|GIF(*.gif)|*.gif";
             dlg.Multiselect = true;
-            if (dlg.ShowDialog().Value)
+            if (dlg.ShowDialog() == true)
             {
                 try
                 {
