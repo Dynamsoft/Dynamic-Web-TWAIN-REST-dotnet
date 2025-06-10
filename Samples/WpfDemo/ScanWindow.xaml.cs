@@ -20,14 +20,14 @@ namespace WpfDemo
     /// </summary>
     public partial class ScanWindow : Window
     {
-        private TextBox m_TotalImageTextBox = null;
+        private TextBox? m_TotalImageTextBox = null;
 
         public void SetTotalImageTextBox(TextBox tbx)
         {
             m_TotalImageTextBox = tbx;
         }
 
-        private TextBox m_CurrentImageTextBox = null;
+        private TextBox? m_CurrentImageTextBox = null;
 
         public void SetCurrentImageTextBox(TextBox tbx)
         {
@@ -39,28 +39,31 @@ namespace WpfDemo
 
         public ScanWindow(MainWindow mainWindow, IReadOnlyList<Scanner> scanners)
         {
+            if (mainWindow == null) throw new ArgumentNullException(nameof(mainWindow));
+            if (scanners == null) throw new ArgumentNullException(nameof(scanners));
+
+            _mainWindow = mainWindow;
+            _scanners = scanners;
+
             InitializeComponent();
             try
             {
                 lbScan.Background = new ImageBrush(new BitmapImage(new Uri(MainWindow.imageDirectory + @"normal\scan_now.png", UriKind.RelativeOrAbsolute)));
 
-                _scanners = scanners;
-                _mainWindow = mainWindow;
-
                 foreach (var scanner in scanners)
                 {
                     cbxSources.Items.Add(scanner.Name);
                 }
-              
+
                 cbxSources.SelectedIndex = 0;
             }
             catch { }
             this.Closing += new System.ComponentModel.CancelEventHandler(ScanWindow_Closing);
         }
 
-        void ScanWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void ScanWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+
         }
 
         private async void lbScan_MouseDown(object sender, MouseButtonEventArgs e)
@@ -93,28 +96,29 @@ namespace WpfDemo
                 options.AutoRun = false;
                 options.Device = _scanners[cbxSources.SelectedIndex].Device;
                 options.Config = new ScannerConfiguration();
-                options.Config.IfShowUI = ckbShowUI.IsChecked.Value;
-                options.Config.IfFeederEnabled = ckbADF.IsChecked.Value;
-                options.Config.IfDuplexEnabled = ckbDuplex.IsChecked.Value;
+                options.Config.IfShowUI = ckbShowUI.IsChecked ?? false; // Fix for CS8629
+                options.Config.IfFeederEnabled = ckbADF.IsChecked ?? false; // Fix for CS8629
+                options.Config.IfDuplexEnabled = ckbDuplex.IsChecked ?? false; // Fix for CS8629
                 options.Config.IfDisableSourceAfterAcquire = true;
-                if (rbBW.IsChecked.Value)
+                if (rbBW.IsChecked ?? false) // Fix for CS8629
                 {
                     options.Config.PixelType = EnumDWT_PixelType.TWPT_BW;
                 }
-                else if (rbGrey.IsChecked.Value)
+                else if (rbGrey.IsChecked ?? false) // Fix for CS8629
                 {
                     options.Config.PixelType = EnumDWT_PixelType.TWPT_GRAY;
                 }
-                else if (rbColorful.IsChecked.Value)
+                else if (rbColorful.IsChecked ?? false) // Fix for CS8629
                 {
                     options.Config.PixelType = EnumDWT_PixelType.TWPT_RGB;
                 }
 
                 await _mainWindow.JSInterop.ScanImageToView(options);
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
-                Application.Current.Dispatcher.Invoke(() => {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
                     MessageBox.Show(exp.Message, "Scan error", MessageBoxButton.OK, MessageBoxImage.Error);
                 });
             }
