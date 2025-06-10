@@ -73,7 +73,7 @@ namespace DWT_REST_MAUI
 
         public MainPage()
         {
-#if WINDOWS || MACCATALYST
+#if WINDOWS
             isDesktop = true;
             _serviceManager = new ServiceManager(); // "dynamsoft.dwt.service"
             _serviceManager.CreateService();

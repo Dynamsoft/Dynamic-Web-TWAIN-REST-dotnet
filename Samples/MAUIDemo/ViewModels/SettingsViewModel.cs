@@ -250,7 +250,9 @@ internal class SettingsViewModel : INotifyPropertyChanged
                 }
             }
         }
+#if WINDOWS
         addresses.Add(MainPage.defaultAddress);
+#endif
         string result = await _dialogService.ShowActionSheetAsync("Select an address", "Cancel", null, addresses.ToArray());
         Debug.WriteLine(result);
         if (!string.IsNullOrEmpty(result))
