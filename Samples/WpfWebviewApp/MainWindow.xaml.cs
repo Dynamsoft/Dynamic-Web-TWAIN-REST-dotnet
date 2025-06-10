@@ -20,9 +20,9 @@ public partial class MainWindow : Window
             _webView = webView;
         }
 
-        public async Task<string> ExecuteJavaScriptAsync(string script)
+        public async Task<string?> ExecuteJavaScriptAsync(string script)
         {
-            string result = null;
+            string? result = null; // Changed to nullable string
             await Application.Current.Dispatcher.InvokeAsync(async () =>
             {
                 result = await _webView.ExecuteScriptAsync(script);
