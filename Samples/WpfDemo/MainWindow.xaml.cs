@@ -113,6 +113,7 @@ namespace WpfDemo
 
         private Dynamsoft.DocumentViewer.JSInterop _jsInterop = null!;
         private ServiceManager _serviceManager = null!;
+        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
 
         public Dynamsoft.DocumentViewer.JSInterop JSInterop
         {
@@ -130,7 +131,7 @@ namespace WpfDemo
                 _serviceManager.CreateService();
                 // because we load ddv page in the service, so we should make sure the service is running, so we need to set a long timeout
                 // or manual create a websocket connection in js, recommend this way.
-                options.ProductKey = "t0131DQEAAJ/lU28fZecBIvVDoVs4/k5Ks8uXHXt20fnA2utzW/9gEiH37ujt2ws6Fe8k2rQE845RQ+mf2YkuC/A9hMIQng8ppTmpxUpW0cZAt+oACSMQYQYijEGEKYgwARIGZjqGprG1CGcYGCRCmEDXpKUZIqyC2GFibmhoAgwGAPLTOE4=";
+                options.ProductKey = productKey;
                 _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                     new WpfWebViewBridge(webView),
                     _serviceManager.Service.BaseAddress);

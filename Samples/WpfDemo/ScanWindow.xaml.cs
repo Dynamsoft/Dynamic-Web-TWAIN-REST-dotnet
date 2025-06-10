@@ -34,8 +34,8 @@ namespace WpfDemo
             m_CurrentImageTextBox = tbx;
         }
 
-        private readonly IReadOnlyList<Scanner> _scanners;
-        private readonly MainWindow _mainWindow;
+        private IReadOnlyList<Scanner> _scanners;
+        private MainWindow _mainWindow;
 
         public ScanWindow(MainWindow mainWindow, IReadOnlyList<Scanner> scanners)
         {
