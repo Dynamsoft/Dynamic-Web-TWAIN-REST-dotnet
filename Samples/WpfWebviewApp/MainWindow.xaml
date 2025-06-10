@@ -19,6 +19,8 @@
 
         <!-- Buttons in the first row -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
+            <Label Height="28" Name="label1" VerticalAlignment="Top" Content="Select Source"/>
+            <ComboBox Width="200" Height="23" Margin="10,3,0,0" Name="cbxSources" VerticalAlignment="Top"/>
             <Button Content="ScanToView" Click="btnScanToView_Click" Margin="5" />
             <Button Content="SaveAsPdf" Click="btnSaveAsPdf_Click" Margin="5" />
         </StackPanel>

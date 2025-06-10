@@ -38,7 +38,7 @@ namespace WpfDemo
                     return;
                 }
             }
-            catch (Exception exp)
+            catch 
             {
                 lbHint.Content = "Please input a float number between 2 and 6500";
                 return;
