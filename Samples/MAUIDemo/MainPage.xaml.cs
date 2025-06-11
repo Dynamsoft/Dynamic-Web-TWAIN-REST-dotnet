@@ -322,11 +322,18 @@ namespace DWT_REST_MAUI
                     await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
                         await fileStream.WriteAsync(pdfContent, 0, pdfContent.Length);
-                        await Share.Default.RequestAsync(new ShareFileRequest
+                        if (isDesktop)
                         {
-                            Title = "Share PDF file",
-                            File = new ShareFile(targetFile)
-                        });
+                            await Launcher.Default.OpenAsync(new OpenFileRequest("", new ReadOnlyFile(targetFile)));
+                        }
+                        else {
+                            await Share.Default.RequestAsync(new ShareFileRequest
+                            {
+                                Title = "Share PDF file",
+                                File = new ShareFile(targetFile)
+                            });
+                        }
+                        
                     }
                 }
             }
@@ -357,11 +364,17 @@ namespace DWT_REST_MAUI
                     await using (var fileStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                     {
                         await fileStream.WriteAsync(bytes, 0, bytes.Length);
-                        await Share.Default.RequestAsync(new ShareFileRequest
+                        if (isDesktop)
                         {
-                            Title = "Share PNG file",
-                            File = new ShareFile(targetFile)
-                        });
+                            await Launcher.Default.OpenAsync(new OpenFileRequest("", new ReadOnlyFile(targetFile)));
+                        }
+                        else {
+                            await Share.Default.RequestAsync(new ShareFileRequest
+                            {
+                                Title = "Share PNG file",
+                                File = new ShareFile(targetFile)
+                            });
+                        }
                     }
                 }
             }
