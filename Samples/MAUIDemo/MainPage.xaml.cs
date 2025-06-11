@@ -190,17 +190,12 @@ namespace DWT_REST_MAUI
                 var result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
-                    if (result.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) || 
-                        result.FileName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                        result.FileName.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                    {
-                        using var stream = await result.OpenReadAsync();
-                        var bytes = await StreamToBytesAsync(stream);
-                        await _jsInterop.LoadFile(bytes);
+                    using var stream = await result.OpenReadAsync();
+                    var bytes = await StreamToBytesAsync(stream);
+                    await _jsInterop.LoadFile(bytes);
                         
-                        ret = new SelectedFile();
-                        ret.imageBytes = bytes;
-                    }
+                    ret = new SelectedFile();
+                    ret.imageBytes = bytes;
                 }
             }
             catch (Exception ex)
