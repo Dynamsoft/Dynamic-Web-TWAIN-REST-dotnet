@@ -500,12 +500,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Line);
             _annotationType = "line";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnPolyline, argsA);
             Button_MouseLeave(btnRectangle, argsA);
             Button_MouseLeave(btnEclipse, argsA);
@@ -518,12 +521,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Polyline);
             _annotationType = "polyline";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnRectangle, argsA);
             Button_MouseLeave(btnEclipse, argsA);
@@ -537,12 +543,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Rectangle);
             _annotationType = "rectangle";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
             Button_MouseLeave(btnEclipse, argsA);
@@ -556,12 +565,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Ellipse);
             _annotationType = "ellipse";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
@@ -576,12 +588,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.TextTypewriter);
             _annotationType = "text";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
@@ -596,12 +611,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.TextBox);
             _annotationType = "textbox";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
@@ -616,12 +634,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Ink);
             _annotationType = "ink";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
@@ -636,12 +657,15 @@ namespace WpfDemo
         {
             _jsInterop.SetAnnotationMode(AnnotationMode.Stamp);
             _annotationType = "stamp";
+            _mouseShape = "";
             MouseButtonEventArgs args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
             args.RoutedEvent = Button.PreviewMouseDownEvent;
             Button_PreviewMouseDown(sender, args);
 
             MouseEventArgs argsA = new MouseEventArgs(Mouse.PrimaryDevice, 0);
             argsA.RoutedEvent = Button.MouseLeaveEvent;
+            Button_MouseLeave(btnHand, argsA);
+            Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnArrow, argsA);
             Button_MouseLeave(btnLine, argsA);
             Button_MouseLeave(btnPolyline, argsA);
