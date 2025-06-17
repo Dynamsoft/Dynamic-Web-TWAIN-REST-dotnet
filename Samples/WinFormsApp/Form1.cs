@@ -109,6 +109,13 @@ namespace WinFormsApp
         {
             try
             {
+                var count = await _jsInterop.GetPageCount();
+                if (count == 0)
+                {
+                    MessageBox.Show("There is no images in the buffer.");
+                    return;
+                }
+
                 var pdf = await _jsInterop.SaveAsPdf(PageOption.All, PdfPageType.PageDefault, SaveAnnotationMode.Annotation, "");
                 string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WinFormsWebViewAppOutput.pdf");
                 File.WriteAllBytes(filePath, pdf);

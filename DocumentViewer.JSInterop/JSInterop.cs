@@ -508,7 +508,7 @@ namespace Dynamsoft.DocumentViewer
         public async Task<UInt32> GetPageCount()
         {
             var result = await ExecuteJavaScript("getPageCount");
-            if (result == null)
+            if (result == null || Convert.ToInt32(result) == -1)
             {
                 return 0;
             }

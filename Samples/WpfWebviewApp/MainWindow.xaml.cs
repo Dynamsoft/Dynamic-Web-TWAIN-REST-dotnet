@@ -100,6 +100,13 @@ public partial class MainWindow : Window
     {
         try
         {
+            var count = await _jsInterop.GetPageCount();
+            if (count == 0)
+            {
+                MessageBox.Show("There is no images in the buffer.");
+                return;
+            }
+
             var pdf = await _jsInterop.SaveAsPdf(PageOption.All, PdfPageType.PageDefault, SaveAnnotationMode.Annotation, "");
             string filePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WpfWebViewAppOutput.pdf");
             File.WriteAllBytes(filePath, pdf);

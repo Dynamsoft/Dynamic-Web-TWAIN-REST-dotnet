@@ -128,6 +128,16 @@ namespace MauiHybridWebViewApp
         {
             try
             {
+                var count = await _jsInterop.GetPageCount();
+                if (count == 0)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert("Alert", "There is no images in the buffer.", "OK");
+                    });
+                    return;
+                }
+
                 var pdf = await _jsInterop.SaveAsPdf(PageOption.All, PdfPageType.PageDefault, SaveAnnotationMode.Annotation, "");
                 string filePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MauiHybridWebViewAppOutput.pdf");
                 File.WriteAllBytes(filePath, pdf);
