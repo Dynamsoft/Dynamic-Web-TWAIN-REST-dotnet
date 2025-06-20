@@ -243,6 +243,8 @@ The samples all use the Document Viewer in a WebView.
 
 ## Web TWAIN Service Installers
 
+Dynamic Web TWAIN service 19.1 is the minimum required version.
+
 
 | Platform      | Download Link |
 | ------------- | --------------- |
