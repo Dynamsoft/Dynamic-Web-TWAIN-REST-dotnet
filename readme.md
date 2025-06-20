@@ -103,7 +103,7 @@ We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-view
 
 1. Add a WebView in your app, like WebView2 for WinForm/WPF and HybridWebView for MAUI.
 
-2. Implement the `IWebViewBridge` interface for different WebViews. The following is some examples.
+2. Implement the `IWebViewBridge` interface for different WebViews. The following are some examples.
 
    MAUI HybridWebView:
 
@@ -196,7 +196,7 @@ We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-view
    <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
    ```
    
-4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamosft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)).
+4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamsoft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)).
 
    ```csharp
    private JSInterop _jsInterop = null;
@@ -217,7 +217,7 @@ We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-view
    await _jsInterop.StartJob(scannerJob);
    ```
    
-6. Save the documents as PDF.
+6. Save the documents as a PDF.
 
    ```csharp
    PageOption pageOption = PageOption.All;
