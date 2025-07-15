@@ -1,6 +1,6 @@
 # Dynamic Web TWAIN REST .NET
 
-This repo contains the packages for scanning documents using [Dynamic Web TWAIN](https://www.dynamsoft.com/web-twain/overview/)'s [REST API](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html).
+This repo contains the packages for scanning documents using [Dynamic Web TWAIN](https://www.dynamsoft.com/web-twain/overview/?utm_source=github)'s [REST API](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html?utm_source=github).
 
 There are four packages:
 
@@ -39,7 +39,7 @@ If you need to copy the service files and web resources (for MAUI) in the servic
 
 ### Scan Documents
 
-1. Create a REST client instance. You need to specify the service's IP and the license key of Dynamic Web TWAIN ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense/?product=dwt)).
+1. Create a REST client instance. You need to specify the service's IP and the license key of Dynamic Web TWAIN ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense/?product=dwt&utm_source=github)).
 
    ```csharp
    var address = "https://127.0.0.1:18623";
@@ -98,7 +98,7 @@ If you need to copy the service files and web resources (for MAUI) in the servic
 
 ### Use the Document Viewer
 
-We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html) in a WebView to view and edit the scanned document images and save the images as PDF.
+We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html?utm_source=github) in a WebView to view and edit the scanned document images and save the images as PDF.
 
 
 1. Add a WebView in your app, like WebView2 for WinForm/WPF and HybridWebView for MAUI.
@@ -196,7 +196,7 @@ We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-view
    <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
    ```
    
-4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamsoft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)).
+4. Create an instance of JSInterop. You need to use a license which is for both Dynamic Web TWAIN and Dynamsoft Document Viewer ([apply for a 30-day trial](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv&utm_source=github)).
 
    ```csharp
    private JSInterop _jsInterop = null;
@@ -238,8 +238,8 @@ The samples all use the Document Viewer in a WebView.
 
 ## Links
 
-* [Dynamsoft Document Viewer Documentation](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html)
-* [RESTful API Documentation](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html)
+* [Dynamsoft Document Viewer Documentation](https://www.dynamsoft.com/document-viewer/docs/introduction/index.htm?utm_source=github)
+* [RESTful API Documentation](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html?utm_source=github)
 
 ## Web TWAIN Service Installers
 
