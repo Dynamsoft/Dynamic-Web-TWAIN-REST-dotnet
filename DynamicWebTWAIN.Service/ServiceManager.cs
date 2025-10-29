@@ -103,6 +103,11 @@ namespace DynamicWebTWAIN.Service
 
         public void CreateService()
         {
+            CreateService(false);
+        }
+
+        public void CreateService(bool createNormalService)
+        {
             if (Service != null)
             {
                 Service.Dispose();
@@ -114,6 +119,7 @@ namespace DynamicWebTWAIN.Service
             }
 
             Process process = new Process();
+            bool done = false;
             string sslServer = "", normalServer = "";
 
             Semaphore pool = new Semaphore(initialCount: 0, maximumCount: 1);
@@ -122,6 +128,10 @@ namespace DynamicWebTWAIN.Service
             string lockFile = System.IO.Path.Combine(ServiceDirectory, "port.lock");
             string arguments = String.Format("-asconsole -asagent \"{0}\" {1} \"{2}\"", lockFile, MaxIdleTime,
                 Environment.UserName);
+            if (createNormalService)
+            {
+                arguments = "-asconsole";
+            }
             process.StartInfo.FileName = ServiceFullPath;
             process.StartInfo.Arguments = arguments;
             process.StartInfo.CreateNoWindow = true;
@@ -137,7 +147,13 @@ namespace DynamicWebTWAIN.Service
                     else if (e.Data.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                         normalServer = e.Data;
                     if (!String.IsNullOrEmpty(sslServer) && !String.IsNullOrEmpty(normalServer))
-                        pool.Release();
+                    {
+                        if (!done)
+                        {
+                            done = true;
+                            pool.Release();
+                        }
+                    }
                 }
             });
 
@@ -145,7 +161,20 @@ namespace DynamicWebTWAIN.Service
             {
                 process.BeginOutputReadLine();
 
-                pool.WaitOne();
+                if (createNormalService)
+                {
+                    while (true)
+                    {
+                        if (process.HasExited)
+                        {
+                            throw new Exception("Failed to start service, possibly due to ports being occupied.");
+                        }
+                        if (pool.WaitOne(100))
+                            break;
+                    }
+                }
+                else
+                    pool.WaitOne();
 
                 if (string.IsNullOrEmpty(sslServer) && string.IsNullOrEmpty(normalServer))
                 {
