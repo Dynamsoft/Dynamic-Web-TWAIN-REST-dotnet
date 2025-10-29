@@ -10,7 +10,7 @@ Start a local service:
 
 ```csharp
 var serviceManager = new ServiceManager();
-serviceManager.CreateService();
+serviceManager.CreateService(true); //pass true to fix the ports to normal Web TWAIN services' ports (18622, 18623, etc). Otherwise, it will try to use ports that have not been occupied.
 ```
 
 Stop a running service:
