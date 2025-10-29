@@ -134,7 +134,7 @@ namespace WpfDemo
                 options.ProductKey = productKey;
                 _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                     new WpfWebViewBridge(webView),
-                    _serviceManager.Service.BaseAddress);
+                    _serviceManager.Service.NormalBaseAddress);
                 await _jsInterop.EnsureInitializedAsync();
             }
             catch(Exception ex)

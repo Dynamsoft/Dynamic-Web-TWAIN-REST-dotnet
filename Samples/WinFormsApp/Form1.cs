@@ -73,7 +73,7 @@ namespace WinFormsApp
                 options.ProductKey = productKey;
                 _jsInterop = new JSInterop(options,
                     new WinFormsWebViewBridge(webView),
-                    _serviceManager.Service.BaseAddress);
+                    _serviceManager.Service.NormalBaseAddress);
                 await _jsInterop.EnsureInitializedAsync();
 
                 _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);

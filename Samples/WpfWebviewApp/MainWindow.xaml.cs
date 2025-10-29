@@ -70,7 +70,7 @@ public partial class MainWindow : Window
             options.ProductKey = productKey;
             _jsInterop = new Dynamsoft.DocumentViewer.JSInterop(options,
                 new WpfWebViewBridge(webView),
-                _serviceManager.Service.BaseAddress);
+                _serviceManager.Service.NormalBaseAddress);
             await _jsInterop.EnsureInitializedAsync();
 
             _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
