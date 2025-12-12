@@ -263,7 +263,7 @@ class MyDesktopViewer extends MyViewer {
                     border: "0px solid blue",
                     background: "rgb(229,243,255)"
                 },
-				scrollToLatest: true,
+                scrollToLatest: true,
             },
             annotationConfig: {
                 enableContinuousDrawing: true
@@ -272,7 +272,10 @@ class MyDesktopViewer extends MyViewer {
         
         this.editViewer.displayMode = "single";
         let internalIndexChanged = false;
+        let ifDragAndDrop = false;
         this.editViewer.on("currentIndexChanged", (evt) => {
+            if(ifDragAndDrop)
+                return;
             let selectedIndices = this.editViewer.thumbnail?.getSelectedPageIndices();
             if (!internalIndexChanged) {
                 selectedIndices = [];
@@ -285,12 +288,21 @@ class MyDesktopViewer extends MyViewer {
         });
 
         this.editViewer.thumbnail?.on("selectedPagesChanged", (evt) => {
+            if(ifDragAndDrop)
+                return;
             const currentPageIndex = this.editViewer.getCurrentPageIndex();
             if (!evt.newIndices.includes(currentPageIndex) && evt.newIndices.length > 0) {
                 internalIndexChanged = true;
                 this.editViewer.goToPage(evt.newIndices[evt.newIndices.length - 1]);
                 internalIndexChanged = false;
             }
+        });
+
+        this.editViewer.thumbnail?.on("pagesDragged", (evt) => {
+            ifDragAndDrop = true;
+        });
+        this.editViewer.thumbnail?.on("pagesDropped", (evt) => {
+            ifDragAndDrop = false;
         });
     }
 
