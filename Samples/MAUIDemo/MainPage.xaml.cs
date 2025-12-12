@@ -54,7 +54,8 @@ namespace DWT_REST_MAUI
         private Dynamsoft.DocumentViewer.JSInterop _jsInterop;
         private IScannerJobClient? scannerJob;
         private Boolean isDesktop;
-        private string productKey = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
+        //use one-day trial license if you've not set the license in the settings
+        private string oneDayTrialLicense = "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9";
         public static string defaultAddress = "https://127.0.0.1:18623";
         string licenseChanged;
 
@@ -122,10 +123,11 @@ namespace DWT_REST_MAUI
                 Dynamsoft.DocumentViewer.JSInteropOptions options = new JSInteropOptions();
                 // because we load ddv page in the service, so we should make sure the service is running, so we need to set a long timeout
                 // or manual create a websocket connection in js, recommend this way.
-                options.ProductKey = Preferences.Get("License", productKey);
+                
+                options.ProductKey = Preferences.Get("License", oneDayTrialLicense);
                 if (options.ProductKey == "")
                 {
-                    options.ProductKey = productKey;
+                    options.ProductKey = oneDayTrialLicense;
                 }
                 if (isDesktop)
                 {
@@ -400,9 +402,9 @@ namespace DWT_REST_MAUI
             Debug.WriteLine("ScanDocument");
             try
             {
-                var license = Preferences.Get("License", productKey);
+                var license = Preferences.Get("License", oneDayTrialLicense);
                 if (license == "") {
-                    license = productKey;
+                    license = oneDayTrialLicense;
                 }
                 var IPAddress = Preferences.Get("IP", defaultAddress);
                 var client = new DWTClient(new Uri(IPAddress), license);
