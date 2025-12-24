@@ -243,6 +243,7 @@ The samples all use the Document Viewer in a WebView.
 
 * [Dynamsoft Document Viewer Documentation](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html)
 * [RESTful API Documentation](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html)
+* [Twain.Wia.Sane.Scanner](https://www.nuget.org/packages/Twain.Wia.Sane.Scanner): Another wrapper of the REST API published on nuget
 
 ## Web TWAIN Service Installers
 
