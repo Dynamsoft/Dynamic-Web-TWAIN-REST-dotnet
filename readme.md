@@ -7,7 +7,7 @@ There are four packages:
 * **DynamicWebTWAIN.RESTClient**: the .NET wrapper of the REST API.
 * **DynamicWebTWAIN.Service**: a package to help you embed Dynamic Web TWAIN service in your app without the need to use its installer. The service is used to access document scanners and provide the REST API for document scanning.
 * **DynamicWebTWAIN.ServiceFinder**: a package to help you find running Dynamic Web TWAIN services in a local network.
-* **DocumentViewer.JSInterop**: a package to help you integrate document capturing with a dedicated viewer in your .NET app using WebView with extra features like PDF loading and saving. It is using a web document viewer library: [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/overview/).
+* **DocumentViewer.JSInterop**: a package to help you integrate document capturing with a dedicated viewer in your .NET app using WebView with extra features like PDF loading, annotation, and saving. It is using a web document viewer library: [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/overview/).
 
 The whole solution enables developers to create desktop or cross-platform applications to scan and digitize documents using the following scanning protocols:
 
