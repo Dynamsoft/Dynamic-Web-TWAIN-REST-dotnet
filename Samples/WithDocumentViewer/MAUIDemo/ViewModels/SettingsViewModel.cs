@@ -216,14 +216,15 @@ internal class SettingsViewModel : INotifyPropertyChanged
 
     public string SelectedColorMode { get; private set; } = "BlackWhite";
 
-    // Save Command
     public ICommand SaveSettingsCommand { get; }
+    public ICommand ResetSettingsCommand { get; }
     public ICommand LoadScannersCommand { get; }
     public ICommand FindServiceCommand { get; }
     private readonly IDialogService _dialogService;
     public SettingsViewModel(IDialogService dialogService)
     {
         SaveSettingsCommand = new Command(ExecuteSaveSettings);
+        ResetSettingsCommand = new Command(ExecuteResetSettings);
         LoadScannersCommand = new Command(LoadScanners);
         FindServiceCommand = new Command(FindServices);
         _dialogService = dialogService;
@@ -365,6 +366,12 @@ internal class SettingsViewModel : INotifyPropertyChanged
         }
 
     }
+    private void ExecuteResetSettings()
+    {
+        Preferences.Clear();
+        Shell.Current.GoToAsync("../?licenseChanged=true");
+    }
+    
 
     // INotifyPropertyChanged implementation
     public event PropertyChangedEventHandler PropertyChanged;

@@ -7,7 +7,7 @@ There are four packages:
 * **DynamicWebTWAIN.RESTClient**: the .NET wrapper of the REST API.
 * **DynamicWebTWAIN.Service**: a package to help you embed Dynamic Web TWAIN service in your app without the need to use its installer. The service is used to access document scanners and provide the REST API for document scanning.
 * **DynamicWebTWAIN.ServiceFinder**: a package to help you find running Dynamic Web TWAIN services in a local network.
-* **DocumentViewer.JSInterop**: a package to help you integrate document capturing with a dedicated viewer in your .NET app using WebView with extra features like PDF loading and saving.
+* **DocumentViewer.JSInterop**: a package to help you integrate document capturing with a dedicated viewer in your .NET app using WebView with extra features like PDF loading, annotation, and saving. It is using a web document viewer library: [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-viewer/overview/).
 
 The whole solution enables developers to create desktop or cross-platform applications to scan and digitize documents using the following scanning protocols:
 
@@ -21,6 +21,9 @@ The whole solution enables developers to create desktop or cross-platform applic
 
 * .NET Standard 2.0 or greater
 * .NET 4.6.1 (Desktop / Server) or greater
+* License for Dynamic Web TWAIN: [30-day trial license](https://www.dynamsoft.com/customer/license/trialLicense?product=dwt)
+* (Optional) License for Dynamsoft Document Viewer if using the document viewer: [30-day trial license for both Web TWAIN and Document Viewer](https://www.dynamsoft.com/customer/license/trialLicense?product=dwtddv)
+
 
 To open the samples, you need Visual Studio 2022 and .NET 9+.
 
@@ -240,6 +243,7 @@ The samples all use the Document Viewer in a WebView.
 
 * [Dynamsoft Document Viewer Documentation](https://www.dynamsoft.com/document-viewer/docs/introduction/index.html)
 * [RESTful API Documentation](https://www.dynamsoft.com/web-twain/docs/extended-usage/restful-api.html)
+* [Twain.Wia.Sane.Scanner](https://www.nuget.org/packages/Twain.Wia.Sane.Scanner): Another wrapper of the REST API published on nuget
 
 ## Web TWAIN Service Installers
 

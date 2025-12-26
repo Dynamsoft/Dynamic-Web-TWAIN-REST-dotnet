@@ -75,13 +75,18 @@
 
             <Label Text="Duplex" FontAttributes="Bold"></Label>
             <CheckBox IsChecked="{Binding Duplex}" HorizontalOptions="Start"></CheckBox>
-            
-            <!-- Save Button -->
-            <Button Text="Save Settings" 
-                    HorizontalOptions="Center"
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                <!-- Save Button -->
+                <Button Text="Save Settings" 
                     Command="{Binding SaveSettingsCommand}"
                     WidthRequest="200"/>
-
+                <!-- Reset Button -->
+                <Button Text="Reset Settings" 
+                    Command="{Binding ResetSettingsCommand}"
+                    WidthRequest="200"/>
+            </HorizontalStackLayout>
+            
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
