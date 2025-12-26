@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DynamicWebTWAIN.RESTClient\DynamicWebTWAIN.RESTClient.csproj" />
+  	<ProjectReference Include="..\..\..\DynamicWebTWAIN.Service\DynamicWebTWAIN.Service.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\..\DynamicWebTWAIN.Service\runtimes.targets" />
+</Project>
