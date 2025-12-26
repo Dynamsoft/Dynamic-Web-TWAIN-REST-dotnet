@@ -220,6 +220,9 @@ class Program
             totalScannedPages += scannedCount;
             Console.WriteLine($"\nScan completed! Pages scanned in this session: {scannedCount}");
             Console.WriteLine($"Total scanned pages: {totalScannedPages}");
+
+            // Cleanup
+            await jobClient.DeleteJob();
         }
         catch (Exception ex)
         {

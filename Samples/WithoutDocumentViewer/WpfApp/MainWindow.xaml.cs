@@ -190,7 +190,7 @@ public partial class MainWindow : Window
             }
             
             // Cleanup
-           // await jobClient.DeleteJob();
+            await jobClient.DeleteJob();
         }
         catch (Exception ex)
         {
