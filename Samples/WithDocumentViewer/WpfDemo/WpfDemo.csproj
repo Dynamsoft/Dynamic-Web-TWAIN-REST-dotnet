@@ -14,10 +14,10 @@
   </ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\..\DocumentViewer.JSInterop\DocumentViewer.JSInterop.csproj" />
-    <ProjectReference Include="..\..\DynamicWebTWAIN.RESTClient\DynamicWebTWAIN.RESTClient.csproj" />
-    <ProjectReference Include="..\..\DynamicWebTWAIN.Service\DynamicWebTWAIN.Service.csproj" />
+    <ProjectReference Include="..\..\..\DocumentViewer.JSInterop\DocumentViewer.JSInterop.csproj" />
+    <ProjectReference Include="..\..\..\DynamicWebTWAIN.RESTClient\DynamicWebTWAIN.RESTClient.csproj" />
+    <ProjectReference Include="..\..\..\DynamicWebTWAIN.Service\DynamicWebTWAIN.Service.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\DynamicWebTWAIN.Service\runtimes.targets" />
+  <Import Project="..\..\..\DynamicWebTWAIN.Service\runtimes.targets" />
 </Project>

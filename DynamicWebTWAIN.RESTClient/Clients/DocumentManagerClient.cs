@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,26 @@ namespace DynamicWebTWAIN.RestClient
         {
             Ensure.ArgumentNotNull(createDocumentOptions, nameof(createDocumentOptions));
             return ApiConnection.Post<Document>(ApiUrls.Docs(), createDocumentOptions);
+        }
+
+        /// <summary>
+        /// Add image to document
+        /// </summary>
+        /// <param name="createDocumentOptions"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        [ManualRoute("POST", "/api/storage/documentss/{documentuid}/pages")]
+        public Task<Document> AddImageToDocument(string documentuid, string strData)
+        {
+            Ensure.ArgumentNotNull(strData, nameof(strData));
+
+            var request = new
+            {
+                //insertPos = 0,
+                source = strData
+            };
+
+            return ApiConnection.Post<Document>(ApiUrls.DocPage(documentuid), request);
         }
 
 
@@ -112,5 +133,50 @@ namespace DynamicWebTWAIN.RestClient
             ApiConnection.Connection.RemoveHttpHeader(HttpHeaderName.DOC_PASSWORD);
         }
 
+        /// <summary>
+        /// retrive document content in PDF format.
+        /// </summary>
+        /// <param name="documentuid"></param>
+        /// <returns></returns>
+        [ManualRoute("GET", "/api/storage/documents/{documentuid}/content?type=application%2Fpdf&quality=80&compression=0&pageType=0&version=1.5")]
+        public Task<byte[]> SaveDocumentAsPDF(string documentuid)
+        {
+            Ensure.ArgumentNotNull(documentuid, nameof(documentuid));
+            return SaveDocumentAsPDF(documentuid, null);
+        }
+
+
+        /// <summary>
+        /// retrive document content in PDF format.
+        /// </summary>
+        /// <param name="documentuid"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [ManualRoute("GET", "/api/storage/documents/{documentuid}/content?type=application%2Fpdf&quality=80&compression=0&pageType=0&version=1.5")]
+        public async Task<byte[]> SaveDocumentAsPDF(string documentuid, string password)
+        {
+            Ensure.ArgumentNotNull(documentuid, nameof(documentuid));
+
+            if (!String.IsNullOrEmpty(password))
+            {
+                ApiConnection.Connection.AddHttpHeader(HttpHeaderName.DOC_PASSWORD, password);
+            }
+            ApiConnection.Connection.AddHttpHeader(HttpHeaderName.DOC_ACCEPT, "application/pdf");
+
+            var query = new Dictionary<string, string>
+            {
+                { "type", "application/pdf" },
+                { "quality", "80" },
+                { "compression", "0" },
+                { "pageType", "0" },
+                { "version", "1.5" }
+            };
+
+            var ret = await ApiConnection.GetRaw(ApiUrls.DocContent(documentuid), query);
+            ApiConnection.Connection.RemoveHttpHeader(HttpHeaderName.DOC_PASSWORD);
+            ApiConnection.Connection.RemoveHttpHeader(HttpHeaderName.DOC_ACCEPT);
+
+            return ret;
+        }
     }
 }
