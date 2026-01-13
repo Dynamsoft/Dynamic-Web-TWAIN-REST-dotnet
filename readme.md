@@ -231,13 +231,19 @@ We can embed [Dynamsoft Document Viewer](https://www.dynamsoft.com/document-view
 
 ## Samples
 
-* [WPFDemo](./Samples/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
-* [MAUIDemo](./Samples/MAUIDemo/): a full-featured demo in MAUI that is mainly designed for the mobile platform. 
-* [MAUIHybridApp](./Samples/MauiHybridApp/): a basic MAUI sample that scans document images into a viewer.
-* [WPFWebViewApp](./Samples/WpfWebviewApp/): a basic WPF sample that scans document images into a viewer.
-* [WinFormsApp](./Samples/WinFormsApp/): a basic WinForms sample that scans document images into a viewer.
+With Dynamsoft Document Viewer in a WebView:
 
-The samples all use the Document Viewer in a WebView.
+* [WPFDemo](./Samples/WithDocumentViewer/WpfDemo/): a full-featured demo in WPF with various image editing, PDF annotation and saving options.
+* [MAUIDemo](./Samples/WithDocumentViewer/MAUIDemo/): a full-featured demo in MAUI that is mainly designed for the mobile platform. 
+* [MAUIHybridApp](./Samples/WithDocumentViewer/MauiHybridApp/): a basic MAUI sample that scans document images into a viewer.
+* [WPFWebViewApp](./Samples/WithDocumentViewer/WpfWebviewApp/): a basic WPF sample that scans document images into a viewer.
+* [WinFormsApp](./Samples/WithDocumentViewer/WinFormsApp/): a basic WinForms sample that scans document images into a viewer.
+
+Without Dynamsoft Document Viewer:
+
+* [ConsoleApp](./Samples/WithoutDocumentViewer/ConsoleApp/): a basic console sample that scans document images into a PDF file.
+* [WpfApp](./Samples/WithoutDocumentViewer/WpfApp/): a basic WPF sample that scans document images into a PDF file.
+
 
 ## Links
 
