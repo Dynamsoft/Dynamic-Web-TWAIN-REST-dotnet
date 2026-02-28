@@ -63,7 +63,7 @@ If you need to copy the service files and web resources (for MAUI) in the servic
 2. List connected scanners.
 
    ```csharp
-   var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
+   var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER | EnumDeviceTypeMask.DT_ICASCANNER | EnumDeviceTypeMask.DT_SANESCANNER);
    ```
 
 3. Start a job to scan documents using a scanner.

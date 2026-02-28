@@ -17,7 +17,7 @@ This is the .NET wrapper of [Dynamic Web TWAIN](https://www.dynamsoft.com/web-tw
 
 ```csharp
 var client = new DWTClient(new Uri(IpAddress), LicenseKey);
-var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
+var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER | EnumDeviceTypeMask.DT_ICASCANNER | EnumDeviceTypeMask.DT_SANESCANNER);
 if (scanners.Count>0) {
     CreateScanJobOptions options = new CreateScanJobOptions();
     options.AutoRun = false;
