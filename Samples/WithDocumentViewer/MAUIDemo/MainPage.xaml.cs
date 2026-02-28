@@ -2,6 +2,7 @@ using DynamicWebTWAIN.RestClient;
 using Dynamsoft.DocumentViewer;
 using System.Diagnostics;
 using DynamicWebTWAIN.Service;
+using System.Text.RegularExpressions;
 
 namespace DWT_REST_MAUI
 {
@@ -412,6 +413,18 @@ namespace DWT_REST_MAUI
                 var DPI = Preferences.Get("DPI", 150);
                 var colorMode = Preferences.Get("ColorMode", "Color");
                 var scannerName = Preferences.Get("Scanner", "");
+                var scannerType = "";
+
+                MatchCollection matches = Regex.Matches(scannerName, @"\((.*?)\)");
+
+                if (matches.Count > 0)
+                {
+                    scannerType = matches[matches.Count - 1].Groups[1].Value;
+
+                    var lastMatch = matches[matches.Count - 1];
+                    scannerName = scannerName.Remove(lastMatch.Index, lastMatch.Length).Trim();
+                }
+
                 var autoFeeder = Preferences.Get("AutoFeeder", false);
                 var duplex = Preferences.Get("Duplex", false);
 
@@ -419,7 +432,6 @@ namespace DWT_REST_MAUI
                 options.AutoRun = false;
                 options.RequireWebsocket = false;
                 options.Config = new ScannerConfiguration();
-                options.Config.XferCount = 7;
                 options.Config.Resolution = DPI;
                 options.Config.IfFeederEnabled = autoFeeder;
                 options.Config.IfDuplexEnabled = duplex;
@@ -441,12 +453,16 @@ namespace DWT_REST_MAUI
                 }
                 if (!string.IsNullOrEmpty(scannerName))
                 {
-                    var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIATWAINSCANNER);
+                    var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER | EnumDeviceTypeMask.DT_ICASCANNER | EnumDeviceTypeMask.DT_SANESCANNER);
                     foreach (var scanner in scanners)
                     {
                         if (scanner.Name == scannerName)
                         {
-                            options.Device = scanner.Device;
+                            if (GetTypeFromName(scannerType) == scanner.Type) {
+                                Debug.WriteLine("Selected scanner: " + scanner.Name);
+                                Debug.WriteLine("Selected scanner type: " + GetTypeFromName(scannerType));
+                                options.Device = scanner.Device;
+                            }
                         }
                     }
                 }
@@ -465,6 +481,24 @@ namespace DWT_REST_MAUI
                 }
             }
             return true;
+        }
+
+        private static EnumDeviceTypeMask GetTypeFromName(string name)
+        {
+            switch (name)
+            {
+                case "TWAIN":
+                    return EnumDeviceTypeMask.DT_TWAINSCANNER;
+                case "WIA":
+                    return EnumDeviceTypeMask.DT_WIASCANNER;
+                case "ICA":
+                    return EnumDeviceTypeMask.DT_ICASCANNER;
+                case "SANE":
+                    return EnumDeviceTypeMask.DT_SANESCANNER;
+                default:
+                    break;
+            }
+            return EnumDeviceTypeMask.DT_UNKNOWN;
         }
     }
 }

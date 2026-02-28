@@ -311,11 +311,11 @@ internal class SettingsViewModel : INotifyPropertyChanged
             ReloadButtonText = "Reloading...";
             List<string> modelNames = new List<string>();
             var client = new DWTClient(new Uri(IpAddress), LicenseKey);
-            var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_WIATWAINSCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER);
+            var scanners = await client.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_ICASCANNER | EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_SANESCANNER | EnumDeviceTypeMask.DT_WIASCANNER);
             foreach (var scanner in scanners)
             {
                 Debug.WriteLine(scanner.Name);
-                modelNames.Add(scanner.Name);
+                modelNames.Add(scanner.Name + " (" + GetDeviceTypeName(scanner.Type) + ")");
             }
             ScannerModels = modelNames;
             var previousSelectedScanner = Preferences.Get("Scanner", "");
@@ -338,6 +338,24 @@ internal class SettingsViewModel : INotifyPropertyChanged
         ReloadButtonText = "Reload";
 
     }
+
+    private static string GetDeviceTypeName(EnumDeviceTypeMask type) {
+        switch (type)
+        {
+            case EnumDeviceTypeMask.DT_TWAINSCANNER:
+                return "TWAIN";
+            case EnumDeviceTypeMask.DT_WIASCANNER:
+                return "WIA";
+            case EnumDeviceTypeMask.DT_ICASCANNER:
+                return "ICA";
+            case EnumDeviceTypeMask.DT_SANESCANNER:
+                return "SANE";
+            default:
+                break;
+        }
+        return "";
+    }
+
 
     private void ExecuteSaveSettings()
     {
