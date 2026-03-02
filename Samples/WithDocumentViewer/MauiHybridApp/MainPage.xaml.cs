@@ -95,7 +95,7 @@ namespace MauiHybridWebViewApp
 #endif
                 await _jsInterop.EnsureInitializedAsync();
 
-                _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
+                _scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER);
 
                 foreach (var scanner in _scanners)
                 {
@@ -169,7 +169,7 @@ namespace MauiHybridWebViewApp
 #endif
                 options.Config = new ScannerConfiguration();
                 //options.Config.XferCount = 7;
-                options.Config.IfFeederEnabled = true;
+                options.Config.IfFeederEnabled = false;
                 options.Config.IfDuplexEnabled = false;
                 await _jsInterop.ScanImageToView(options);
             }

@@ -17,6 +17,7 @@ using System.IO;
 using System.Drawing;
 using DynamicWebTWAIN.Service;
 using Dynamsoft.DocumentViewer;
+using DynamicWebTWAIN.RestClient;
 namespace WpfDemo
 {
     /// <summary>
@@ -370,7 +371,7 @@ namespace WpfDemo
                 {
                     button.IsEnabled = false;
 
-                    var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER);
+                    var scanners = await _jsInterop.DWTClient.ScannerControlClient.ScannerManager.GetScanners(DynamicWebTWAIN.RestClient.EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER);
 
                     if (scanners.Count > 0)
                     {

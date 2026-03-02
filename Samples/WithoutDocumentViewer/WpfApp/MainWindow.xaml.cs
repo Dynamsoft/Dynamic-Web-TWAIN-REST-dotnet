@@ -35,7 +35,7 @@ public partial class MainWindow : Window
             // Use DWTClient directly without JSInterop
             _dwtClient = new DWTClient(_serviceManager.Service.BaseAddress, productKey);
 
-            _scanners = await _dwtClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER);
+            _scanners = await _dwtClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER);
 
             cbxSources.Items.Clear();
             foreach (var scanner in _scanners)

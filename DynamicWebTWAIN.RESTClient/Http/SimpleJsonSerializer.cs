@@ -133,7 +133,17 @@ namespace DynamicWebTWAIN.RestClient.Internal
                 Justification = "The API expects lowercase values")]
             protected override object SerializeEnum(Enum p)
             {
-                return p.ToParameter();
+                var result = p.ToParameter();
+
+                var underlying = Enum.GetUnderlyingType(p.GetType());
+                if (underlying == typeof(int))
+                {
+                    if (Int32.TryParse(result.ToString(), out int intValue))
+                    {
+                        return intValue;
+                    }
+                }
+                return result;
             }
 
             internal object DeserializeEnumHelper(string value, Type type)

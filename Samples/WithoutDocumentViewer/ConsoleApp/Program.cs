@@ -29,7 +29,7 @@ class Program
 
             // List all scanners
             Console.WriteLine("Getting scanner list...");
-            var scanners = await dwtClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER);
+            var scanners = await dwtClient.ScannerControlClient.ScannerManager.GetScanners(EnumDeviceTypeMask.DT_TWAINSCANNER | EnumDeviceTypeMask.DT_WIASCANNER);
             
             if (scanners == null || scanners.Count == 0)
             {
@@ -110,7 +110,7 @@ class Program
         }
     }
 
-    private static async Task<Scanner?> SelectSource(IReadOnlyList<Scanner> scanners)
+    private static Task<Scanner?> SelectSource(IReadOnlyList<Scanner> scanners)
     {
         try
         {
@@ -132,21 +132,23 @@ class Program
             var selectedScanner = scanners[selectedIndex];
             Console.WriteLine($"Selected: {selectedScanner.Name}");
             
-            return selectedScanner;
+            return Task.FromResult<Scanner?>(selectedScanner);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error selecting scanner: {ex.Message}");
-            return null;
+            return Task.FromResult<Scanner?>(null);
         }
     }
 
     private static async Task ScanDocument(DWTClient dwtClient, Scanner scanner, string documentId)
     {
+        IScannerJobClient? jobClient = null;
+
         try
         {
             Console.WriteLine("\n--- Scanning ---");
-            
+
             // Configure scan job
             CreateScanJobOptions options = new CreateScanJobOptions();
             options.AutoRun = false;
@@ -159,19 +161,19 @@ class Program
             options.Config.PixelType = EnumDWT_PixelType.TWPT_RGB;
 
             // Create scan job
-            var jobClient = await dwtClient.ScannerControlClient.ScannerJobs.CreateJob(options);
+            jobClient = await dwtClient.ScannerControlClient.ScannerJobs.CreateJob(options);
 
             // Scan listener
-            var tcs = new TaskCompletionSource<bool>();
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var scannedCount = 0;
             var processingCount = 0;
             var lockObj = new object();
 
             jobClient.PageScanned += async (sender, e) =>
             {
-                lock (lockObj) 
-                { 
-                    processingCount++; 
+                lock (lockObj)
+                {
+                    processingCount++;
                     scannedCount++;
                     Console.WriteLine($"Processing page {scannedCount}...");
                 }
@@ -201,7 +203,7 @@ class Program
                     }
                     await Task.Delay(100);
                 }
-                tcs.SetResult(true);
+                tcs.TrySetResult(true);
             };
 
             // Start scanning
@@ -210,7 +212,7 @@ class Program
 
             // Wait for scan completion
             var completedTask = await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(120)));
-            
+
             if (completedTask != tcs.Task)
             {
                 Console.WriteLine("\nScan timeout.");
@@ -220,13 +222,18 @@ class Program
             totalScannedPages += scannedCount;
             Console.WriteLine($"\nScan completed! Pages scanned in this session: {scannedCount}");
             Console.WriteLine($"Total scanned pages: {totalScannedPages}");
-
-            // Cleanup
-            await jobClient.DeleteJob();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error during scanning: {ex.Message}");
+        }
+        finally
+        {
+            // Cleanup
+            if (jobClient != null)
+            {
+                await jobClient.DeleteJob();
+            }
         }
     }
 
