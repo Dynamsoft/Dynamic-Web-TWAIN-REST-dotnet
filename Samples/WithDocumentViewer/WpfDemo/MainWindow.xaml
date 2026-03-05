@@ -132,7 +132,7 @@
         </Grid>
 
         <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0,0,0,0" BorderBrush="#FFAEAEAE">
-            <TextBlock HorizontalAlignment="Stretch" Background="#FFE6E5EA" Text="SDKs used in this demo: Dynamic Web TWAIN and Dynamsoft Document Viewer.                               @2025 Dynamsoft Corporation. All rights reserved.   " TextAlignment="Right"/>
+            <TextBlock HorizontalAlignment="Stretch" Background="#FFE6E5EA" Text="SDKs used in this demo: Dynamic Web TWAIN and Dynamsoft Document Viewer.                               @2026 Dynamsoft Corporation. All rights reserved.   " TextAlignment="Right"/>
         </Border>
 
     </Grid>
