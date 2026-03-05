@@ -40,7 +40,14 @@ public partial class MainWindow : Window
             cbxSources.Items.Clear();
             foreach (var scanner in _scanners)
             {
-                cbxSources.Items.Add(scanner.Name);
+                if (scanner.Type == EnumDeviceTypeMask.DT_WIASCANNER)
+                {
+                    cbxSources.Items.Add("WIA-" + scanner.Name);
+                }
+                else
+                {
+                    cbxSources.Items.Add(scanner.Name);
+                }
             }
             if (cbxSources.Items.Count > 0)
                 cbxSources.SelectedIndex = 0;

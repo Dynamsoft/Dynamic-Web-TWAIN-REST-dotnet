@@ -80,7 +80,14 @@ namespace WinFormsApp
 
                 foreach (var scanner in _scanners)
                 {
-                    cbxSources.Items.Add(scanner.Name);
+                    if (scanner.Type == EnumDeviceTypeMask.DT_WIASCANNER)
+                    {
+                        cbxSources.Items.Add("WIA-" + scanner.Name);
+                    }
+                    else
+                    {
+                        cbxSources.Items.Add(scanner.Name);
+                    }
                 }
 
                 cbxSources.SelectedIndex = 0;

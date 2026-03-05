@@ -57,7 +57,7 @@ class Program
             while (!exit)
             {
                 Console.WriteLine("\n=== Main Menu ===");
-                Console.WriteLine($"Current Scanner: {(selectedScanner != null ? selectedScanner.Name : "Not selected")}");
+                Console.WriteLine($"Current Scanner: {(selectedScanner != null ? (selectedScanner.Type == EnumDeviceTypeMask.DT_WIASCANNER ? "WIA-" + selectedScanner.Name : selectedScanner.Name) : "Not selected")}");
                 Console.WriteLine($"Total scanned pages: {totalScannedPages}");
                 Console.WriteLine("1. Select Source");
                 Console.WriteLine("2. Scan");
@@ -118,7 +118,16 @@ class Program
             Console.WriteLine($"\nFound {scanners.Count} scanner(s):");
             for (int i = 0; i < scanners.Count; i++)
             {
-                Console.WriteLine($"  [{i}] {scanners[i].Name}");
+                var scanner = scanners[i];
+                if (scanner.Type == EnumDeviceTypeMask.DT_WIASCANNER)
+                {
+                    Console.WriteLine($"  [{i}] {"WIA-" + scanners[i].Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"  [{i}] {scanners[i].Name}");
+                }
+
             }
 
             Console.Write("\nSelect scanner index (default 0): ");
@@ -130,7 +139,14 @@ class Program
             }
 
             var selectedScanner = scanners[selectedIndex];
-            Console.WriteLine($"Selected: {selectedScanner.Name}");
+            if (selectedScanner.Type == EnumDeviceTypeMask.DT_WIASCANNER)
+            {
+                Console.WriteLine($"Selected: {"WIA-" + selectedScanner.Name}");
+            }
+            else
+            {
+                Console.WriteLine($"Selected: {selectedScanner.Name}");
+            }
             
             return Task.FromResult<Scanner?>(selectedScanner);
         }
