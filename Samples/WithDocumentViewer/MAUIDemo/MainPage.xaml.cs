@@ -435,6 +435,7 @@ namespace DWT_REST_MAUI
                 options.Config.Resolution = DPI;
                 options.Config.IfFeederEnabled = autoFeeder;
                 options.Config.IfDuplexEnabled = duplex;
+                options.ScannerFailureTimeout = 999999;
                 Debug.WriteLine(colorMode);
                 if (colorMode == "Color")
                 {
