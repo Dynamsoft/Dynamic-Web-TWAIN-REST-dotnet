@@ -602,6 +602,7 @@ class MyViewerApp {
         // Preload DDV Resource
         Dynamsoft.DDV.Core.loadWasm();
         await Dynamsoft.DDV.Core.init();
+        Dynamsoft.DDV.use(Dynamsoft.DDV.AnnotationPlugin);
         Dynamsoft.DDV.setProcessingHandler("imageFilter", new Dynamsoft.DDV.ImageFilter());
 
         if (options.uiConfig === 'desktop-default') {
